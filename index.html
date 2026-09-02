@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoGasto | Monitor de Água e Energia</title>
-
-  <!-- Bootstrap 5 via CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Ícones Bootstrap (opcional, via CDN) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <title>EcoBrasil | Monitor de Água e Energia</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 72'%3E%3Cpath d='M32 3S8 32 8 48a24 24 0 0 0 48 0C56 32 32 3 32 3Z' fill='%231677e8'/%3E%3Cpath d='M29 19h13l-7 13h9L24 57l6-19h-9Z' fill='%2315a85b' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <style>
     :root {
@@ -16,6 +14,9 @@
       --agua-azul-escuro: #084298;
       --eco-verde: #198754;
       --eco-verde-claro: #d1e7dd;
+      --marca-principal: #0f766e;
+      --marca-principal-escura: #115e59;
+      --marca-suave: #ecfdf5;
       --energia-amarelo: #ffc107;
       --energia-amarelo-escuro: #997404;
       --alerta-vermelho: #dc3545;
@@ -28,9 +29,7 @@
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       color: #212529;
     }
-
-    /* Cabeçalho */
-    .app-header {
+.app-header {
       background: linear-gradient(135deg, var(--agua-azul) 0%, var(--eco-verde) 100%);
       color: #fff;
       padding: 1.75rem 0;
@@ -49,8 +48,19 @@
       justify-content: center;
     }
 
-    /* Cartões */
-    .card-eco {
+    .location-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+.card-eco {
       border: none;
       border-radius: 1rem;
       box-shadow: 0 2px 10px rgba(0,0,0,0.06);
@@ -64,14 +74,88 @@
     .header-agua { background-color: var(--agua-azul); color: #fff; }
     .header-energia { background-color: var(--energia-amarelo); color: #212529; }
     .header-eco { background-color: var(--eco-verde); color: #fff; }
+    .header-resultado { background-color: var(--marca-principal); color: #fff; }
+.tipo-consumo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+      width: 100%;
+      max-width: 760px;
+      margin-left: 0;
+      margin-right: auto;
+    }
 
-    /* Eletrodomésticos */
-    .appliance-box {
+    .tipo-consumo-fieldset {
+      width: 100%;
+      margin-left: 0;
+      padding-left: 0;
+      text-align: left;
+    }
+
+    .tipo-option {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 1rem;
+      border: 2px solid #dfe6ec;
+      border-radius: 0.85rem;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .tipo-option:hover {
+      border-color: #8bb9ee;
+      transform: translateY(-1px);
+    }
+
+    .tipo-option:has(.tipo-radio:checked) {
+      border-color: var(--agua-azul);
+      background: #eef6ff;
+      box-shadow: 0 0 0 3px rgba(13,110,253,0.10);
+    }
+
+    .tipo-option:has(.tipo-radio:focus-visible) {
+      outline: 3px solid rgba(13,110,253,0.25);
+      outline-offset: 2px;
+    }
+
+    .tipo-radio {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .tipo-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #e8f2ff;
+      color: var(--agua-azul);
+      font-size: 1.35rem;
+      flex: 0 0 auto;
+    }
+
+    .tipo-option strong,
+    .tipo-option small {
+      display: block;
+    }
+.appliance-box {
       border: 1px solid #dee2e6;
       border-radius: 0.75rem;
       padding: 0.9rem;
       transition: all 0.15s ease-in-out;
       height: 100%;
+      cursor: pointer;
+    }
+    .appliance-box:hover {
+      border-color: #9fb6aa;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(0,0,0,0.07);
     }
     .appliance-box:has(input:checked) {
       border-color: var(--eco-verde);
@@ -83,9 +167,7 @@
       max-width: 60px;
       text-align: center;
     }
-
-    /* Botões */
-    .btn-eco-primary {
+.btn-eco-primary {
       background-color: var(--eco-verde);
       border-color: var(--eco-verde);
       color: #fff;
@@ -105,9 +187,7 @@
       background-color: var(--agua-azul);
       color: #fff;
     }
-
-    /* Semáforo */
-    .semaforo-box {
+.semaforo-box {
       border-radius: 1rem;
       border: 2px solid;
       padding: 1.5rem;
@@ -143,9 +223,7 @@
       overflow: hidden;
       background-color: #e9ecef;
     }
-
-    /* Dicas */
-    .dica-item {
+.dica-item {
       border-left: 4px solid var(--eco-verde);
       background-color: #fff;
       border-radius: 0 0.6rem 0.6rem 0;
@@ -154,24 +232,35 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
 
+    .dica-item.dica-agua {
+      border-left-color: var(--azul);
+    }
+
     .economia-card {
-      border-left: 4px solid var(--agua-azul);
-      background-color: #eef6ff;
+      border-left: 4px solid var(--marca-principal);
+      background-color: var(--marca-suave);
       border-radius: 0 0.6rem 0.6rem 0;
       padding: 0.9rem 1.1rem;
       margin-bottom: 0.7rem;
     }
     .economia-valor {
-      color: var(--eco-verde);
+      color: var(--marca-principal-escura);
       font-weight: 700;
+    }
+
+    .fonte-oficial {
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid #e5e7eb;
+      color: #5f6b76;
+      font-size: 0.8rem;
+      line-height: 1.35;
     }
 
     .badge-tipo {
       font-size: 0.75rem;
     }
-
-    /* Utilidades */
-    .screen { display: none; }
+.screen { display: none; }
     .screen.active { display: block; }
 
     .invalid-feedback { display: none; }
@@ -187,29 +276,492 @@
 
     @media (max-width: 576px) {
       .app-header h1 { font-size: 1.4rem; }
+      .tipo-consumo-grid { grid-template-columns: 1fr; }
+      .location-badge { margin-top: 0.8rem; }
+    }
+:root {
+      --azul: #1677e8;
+      --azul-escuro: #0e5fc5;
+      --azul-suave: #eaf5ff;
+      --verde: #18a957;
+      --verde-escuro: #108847;
+      --verde-suave: #eef9f1;
+      --texto: #183153;
+      --texto-suave: #63718b;
+      --borda: #dce8f3;
+      --fundo: #f4faff;
+      --branco: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--texto);
+      background:
+        radial-gradient(circle at 86% 4%, rgba(22,119,232,.08), transparent 24rem),
+        linear-gradient(135deg, #f7fcff 0%, var(--fundo) 100%);
+    }
+
+    .app-layout { min-height: 100vh; }
+
+    .side-panel {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 1030;
+      width: 252px;
+      display: flex;
+      flex-direction: column;
+      padding: 1.75rem 1.25rem;
+      background: rgba(255,255,255,.96);
+      border-right: 1px solid var(--borda);
+      box-shadow: 8px 0 30px rgba(42,92,135,.06);
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      margin-bottom: 2.4rem;
+      color: var(--texto);
+      text-decoration: none;
+    }
+
+    .brand-drop {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .brand-symbol {
+      width: 52px;
+      height: 52px;
+      display: block;
+      filter: drop-shadow(0 3px 6px rgba(22,119,232,.16));
+    }
+
+    .brand-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+
+    .brand-title .eco { color: var(--azul); }
+    .brand-title .brasil { color: var(--verde); }
+    .brand-subtitle { color: var(--texto-suave); font-size: .72rem; margin-top: .35rem; }
+
+    .side-nav { display: grid; gap: .55rem; }
+
+    .side-nav a {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      min-height: 48px;
+      padding: .75rem .95rem;
+      color: var(--texto);
+      text-decoration: none;
+      border-radius: .8rem;
+      font-weight: 500;
+      transition: .18s ease;
+    }
+
+    .side-nav a:hover,
+    .side-nav a.active {
+      color: var(--azul-escuro);
+      background: var(--azul-suave);
+    }
+
+    .side-nav i { width: 22px; font-size: 1.15rem; text-align: center; }
+
+    .side-goal {
+      margin-top: auto;
+      padding: 1rem;
+      border: 1px solid #d6edda;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, #f6fff8, var(--verde-suave));
+    }
+
+    .side-goal strong { color: var(--verde-escuro); }
+    .side-goal .progress { height: 8px; background: #dce8df; }
+    .side-goal .progress-bar { background: linear-gradient(90deg, #69c84a, var(--verde)); }
+
+    .content-shell { min-height: 100vh; margin-left: 252px; }
+
+    .app-header {
+      padding: 1rem 1.5rem .35rem;
+      color: var(--texto);
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .top-banner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .top-message {
+      justify-self: center;
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      min-width: min(560px, 100%);
+      padding: .85rem 1.25rem;
+      border: 1px solid #e4edf5;
+      border-radius: 1rem;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 7px 22px rgba(52,100,140,.08);
+    }
+
+    .top-message-icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: var(--verde);
+      background: var(--verde-suave);
+      border-radius: 50%;
+      font-size: 1.4rem;
+    }
+
+    .top-message strong { color: var(--azul-escuro); }
+    .top-message p { margin: .15rem 0 0; color: var(--texto-suave); font-size: .9rem; }
+
+    .location-badge {
+      padding: .75rem 1rem;
+      border: 0;
+      color: var(--azul-escuro);
+      background: var(--azul-suave);
+      box-shadow: none;
+    }
+
+    main.container {
+      max-width: 1240px;
+      padding-top: .6rem;
+    }
+
+    .card-eco {
+      overflow: hidden;
+      border: 1px solid var(--borda);
+      border-radius: 1rem;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 10px 28px rgba(45,94,135,.08);
+    }
+
+    .card-eco .card-header,
+    .header-agua,
+    .header-energia,
+    .header-eco,
+    .header-resultado {
+      padding: 1.15rem 1.5rem;
+      color: var(--verde-escuro);
+      background: #fff;
+      border-bottom: 1px solid #edf2f6;
+      font-size: 1.05rem;
+    }
+
+    .form-label { color: var(--texto); }
+    .form-control,
+    .input-group-text {
+      min-height: 44px;
+      border-color: #cfdeec;
+      background: #fff;
+    }
+
+    .form-control:focus {
+      border-color: #7cb8f3;
+      box-shadow: 0 0 0 .2rem rgba(22,119,232,.12);
+    }
+
+    .tipo-consumo-grid { max-width: none; gap: 1rem; }
+
+    .tipo-option {
+      min-height: 102px;
+      padding: 1.2rem 1.35rem;
+      border: 1px solid #cfe4d3;
+      border-radius: 1rem;
+      box-shadow: none;
+    }
+
+    .tipo-option::after {
+      content: '';
+      width: 22px;
+      height: 22px;
+      margin-left: auto;
+      border: 1.5px solid #bfd0df;
+      border-radius: 50%;
+    }
+
+    .tipo-option:has(.tipo-radio:checked) {
+      border-color: var(--azul);
+      background: linear-gradient(135deg, #f7fbff, var(--azul-suave));
+      box-shadow: 0 0 0 2px rgba(22,119,232,.08);
+    }
+
+    .tipo-option:has(.tipo-radio:checked)::after {
+      content: '\2713';
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--azul);
+      border-color: var(--azul);
+      font-size: .75rem;
+      font-weight: 800;
+    }
+
+    .tipo-icon {
+      width: 58px;
+      height: 58px;
+      color: var(--azul);
+      background: var(--azul-suave);
+      font-size: 1.55rem;
+    }
+.tipo-icon-energia {
+      color: var(--verde) !important;
+      background: var(--verde-suave) !important;
+    }
+
+    .tipo-icon-energia i { color: var(--verde) !important; }
+
+    .tipo-option[for="tipoEnergia"] { border-color: #cfe8d5; }
+
+    .tipo-icon-agua {
+      color: var(--azul) !important;
+      background: var(--azul-suave) !important;
+    }
+
+    .tipo-icon-agua i { color: var(--azul) !important; }
+
+    .tipo-option[for="tipoAgua"] { border-color: #d2e5f8; }
+
+    .tipo-option[for="tipoEnergia"]:has(.tipo-radio:checked) {
+      border-color: var(--verde);
+      background: linear-gradient(135deg, #fbfffc, var(--verde-suave));
+      box-shadow: 0 0 0 2px rgba(24,169,87,.08);
+    }
+
+    .tipo-option[for="tipoEnergia"]:has(.tipo-radio:checked)::after {
+      background: var(--verde);
+      border-color: var(--verde);
+    }
+
+    .tipo-option[for="tipoAgua"]:has(.tipo-radio:checked) {
+      border-color: var(--azul);
+      background: linear-gradient(135deg, #fafdff, var(--azul-suave));
+      box-shadow: 0 0 0 2px rgba(22,119,232,.08);
+    }
+
+    .tipo-option[for="tipoAgua"]:has(.tipo-radio:checked)::after {
+      background: var(--azul);
+      border-color: var(--azul);
+    }
+
+    .appliance-box {
+      border-color: var(--borda);
+      background: #fff;
+      box-shadow: 0 3px 12px rgba(50,98,137,.04);
+    }
+
+    .appliance-box:hover { border-color: #84b7e7; }
+    .appliance-box:has(input:checked) { border-color: var(--verde); background: var(--verde-suave); }
+
+    body[data-tipo="agua"] .appliance-box:has(input:checked) {
+      border-color: var(--azul);
+      background: var(--azul-suave);
+    }
+
+    .btn-eco-primary {
+      min-width: 330px;
+      padding: .8rem 1.5rem;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--verde-escuro), #22bd62);
+      box-shadow: 0 8px 18px rgba(24,169,87,.2);
+    }
+
+    .btn-eco-primary:hover { background: linear-gradient(90deg, #0b743b, var(--verde)); }
+
+    body[data-tipo="agua"] .btn-eco-primary {
+      background: linear-gradient(90deg, var(--azul-escuro), #2e92f2);
+      box-shadow: 0 8px 18px rgba(22,119,232,.2);
+    }
+
+    body[data-tipo="agua"] .btn-eco-primary:hover {
+      background: linear-gradient(90deg, #0b53a9, var(--azul));
+    }
+    .btn-outline-eco { border-color: var(--azul); color: var(--azul); border-radius: 999px; }
+
+    .semaforo-box {
+      border: 1px solid var(--borda);
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(45,94,135,.07);
+    }
+
+    .semaforo-verde,
+    .semaforo-amarelo,
+    .semaforo-vermelho { border-color: var(--borda); background: #fff; }
+
+    .luz-verde { background: var(--verde); }
+    .luz-amarela { background: var(--azul); }
+    .luz-vermelha { background: var(--azul-escuro); }
+
+    .comparativo-barra { height: 24px; border-radius: 999px; background: #e8f0f6; }
+    .economia-card { border-left-color: var(--verde); background: #f7fcf8; }
+    .dica-item { border-left-color: var(--azul); box-shadow: none; background: #f8fbfe; }
+
+    .quick-benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+      padding: 1.1rem 1.35rem;
+      border: 1px solid var(--borda);
+      border-radius: 1rem;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 8px 24px rgba(45,94,135,.06);
+    }
+
+    .benefit-item { display: flex; align-items: center; gap: .8rem; }
+    .benefit-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: var(--azul);
+      background: var(--azul-suave);
+      border-radius: 50%;
+    }
+    .benefit-item:nth-child(2) .benefit-icon { color: var(--verde); background: var(--verde-suave); }
+    .benefit-item strong { display: block; font-size: .9rem; }
+    .benefit-item small { color: var(--texto-suave); }
+
+    .history-card {
+      height: 100%;
+      padding: 1.1rem;
+      border: 1px solid var(--borda);
+      border-radius: 1rem;
+      background: #fff;
+      box-shadow: 0 6px 20px rgba(45,94,135,.06);
+    }
+
+    .history-type {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .35rem .65rem;
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    .history-type.energia { color: var(--verde-escuro); background: var(--verde-suave); }
+    .history-type.agua { color: var(--azul-escuro); background: var(--azul-suave); }
+
+    .history-empty {
+      padding: 3rem 1rem;
+      text-align: center;
+      color: var(--texto-suave);
+      border: 1px dashed #bfd2e3;
+      border-radius: 1rem;
+      background: rgba(255,255,255,.72);
+    }
+
+    footer { border-top: 1px solid var(--borda); background: rgba(255,255,255,.7); }
+
+    @media (max-width: 991.98px) {
+      .side-panel {
+        position: static;
+        width: 100%;
+        padding: 1rem;
+        display: block;
+        border-right: 0;
+        border-bottom: 1px solid var(--borda);
+      }
+      .brand-lockup { margin-bottom: .8rem; }
+      .brand-drop { width: 40px; height: 40px; }
+      .brand-symbol { width: 40px; height: 40px; }
+      .side-nav { grid-template-columns: repeat(4, 1fr); }
+      .side-nav a { justify-content: center; padding: .65rem; font-size: .82rem; }
+      .side-nav a:nth-child(5), .side-goal { display: none; }
+      .content-shell { margin-left: 0; }
+      .top-banner { grid-template-columns: 1fr; }
+      .top-message { justify-self: stretch; min-width: 0; }
+      .location-badge { justify-self: start; margin-top: 0; }
+    }
+
+    @media (max-width: 767.98px) {
+      .app-header { padding: .8rem .5rem .2rem; }
+      main.container { padding-inline: .75rem; }
+      .side-nav a span { display: none; }
+      .tipo-consumo-grid, .quick-benefits { grid-template-columns: 1fr; }
+      .btn-eco-primary { min-width: 0; width: 100%; }
+      .card-eco .card-body { padding: 1.15rem !important; }
     }
   </style>
 </head>
-<body>
+<body id="topo">
+  <div class="app-layout">
+    <!-- Menu lateral -->
+    <aside class="side-panel" aria-label="Navegação principal">
+      <a class="brand-lockup" href="#topo" id="logoHome" aria-label="EcoBrasil - início">
+        <span class="brand-drop" aria-hidden="true">
+          <img class="brand-symbol" alt="" src="data:image/webp;base64,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" />
+        </span>
+        <span>
+          <span class="brand-title"><span class="eco">Eco</span><span class="brasil">Brasil</span></span>
+          <span class="brand-subtitle d-block">Monitore. Economize. Preserve.</span>
+        </span>
+      </a>
 
-  <!-- ===================== CABEÇALHO ===================== -->
-  <header class="app-header mb-4">
-    <div class="container">
-      <div class="d-flex align-items-center gap-3">
-        <div class="logo-icon">
-          <i class="bi bi-droplet-half"></i>
+      <nav class="side-nav">
+        <a class="active" href="#topo" id="navHome"><i class="bi bi-house-door-fill"></i><span>Início</span></a>
+        <a href="#formConsumo" id="navConsumo"><i class="bi bi-graph-up-arrow"></i><span>Consumo</span></a>
+        <a href="#telaHistorico" id="navHistorico"><i class="bi bi-clock-history"></i><span>Histórico</span></a>
+        <a href="#telaDicas" id="navDicas"><i class="bi bi-leaf"></i><span>Dicas</span></a>
+        <a href="#rodape" id="navSobre"><i class="bi bi-info-circle"></i><span>Sobre</span></a>
+      </nav>
+
+      <div class="side-goal">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <i class="bi bi-bullseye text-success"></i>
+          <strong>Meta do mês</strong>
         </div>
-        <div>
-          <h1 class="h3 mb-0 fw-bold">EcoGasto</h1>
-          <p class="mb-0" id="boasVindas">Monitore sua água e energia, economize todo mês.</p>
+        <p class="small mb-2">Reduza 10% do seu consumo.</p>
+        <div class="progress" role="progressbar" aria-label="Progresso ilustrativo da meta" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar" style="width: 70%"></div>
         </div>
+        <small class="d-block mt-2 text-success fw-semibold">70% da meta</small>
       </div>
-    </div>
-  </header>
+    </aside>
+
+    <div class="content-shell">
+<header class="app-header mb-3">
+        <div class="top-banner">
+          <div class="top-message">
+            <span class="top-message-icon"><i class="bi bi-tree-fill"></i></span>
+            <div>
+              <strong>Pequenas atitudes, grandes mudanças!</strong>
+              <p id="boasVindas">Acompanhe seu consumo e faça a diferença.</p>
+            </div>
+          </div>
+          <div class="location-badge" title="Localização fixa da análise">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>Sorocaba - SP</span>
+          </div>
+        </div>
+      </header>
 
   <main class="container pb-5">
-
-    <!-- ===================== TELA 1: CADASTRO ===================== -->
+    <!-- Formulário -->
     <section id="tela1" class="screen active">
       <div class="row g-4">
         <div class="col-12">
@@ -219,31 +771,51 @@
             </div>
             <div class="card-body p-4">
               <form id="formConsumo" novalidate>
-
-                <!-- Perfil rápido -->
-                <div class="row g-3 mb-2">
+<div class="row g-3 mb-2">
                   <div class="col-md-4">
                     <label for="nomeUsuario" class="form-label">Seu nome (opcional)</label>
                     <input type="text" class="form-control" id="nomeUsuario" placeholder="Ex: Maria">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="quantidadePessoas" class="form-label">Quantidade de pessoas *</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+                      <input type="number" class="form-control" id="quantidadePessoas" min="1" max="20" step="1" value="1" required>
+                    </div>
+                    <div class="invalid-feedback">Informe quantas pessoas moram na residência.</div>
                   </div>
                   <div class="col-md-4">
                     <label for="mesReferencia" class="form-label">Mês de referência *</label>
                     <input type="month" class="form-control" id="mesReferencia" required>
                     <div class="invalid-feedback">Informe o mês de referência.</div>
                   </div>
-                  <div class="col-md-4">
-                    <label for="tipoConsumo" class="form-label">Tipo de consumo *</label>
-                    <select class="form-select" id="tipoConsumo" required>
-                      <option value="energia" selected>Energia elétrica (kWh)</option>
-                      <option value="agua">Água (m³)</option>
-                    </select>
-                  </div>
                 </div>
 
-                <hr class="my-4">
+                <fieldset class="tipo-consumo-fieldset mt-4">
+                  <legend class="form-label fw-semibold mb-2">O que você quer analisar? *</legend>
+                  <input type="hidden" id="tipoConsumo" value="energia">
+                  <div class="tipo-consumo-grid">
+                    <label class="tipo-option" for="tipoEnergia">
+                      <input class="tipo-radio" type="radio" name="tipoConsumoOpcao" id="tipoEnergia" value="energia" checked>
+                      <span class="tipo-icon tipo-icon-energia"><i class="bi bi-lightning-charge-fill"></i></span>
+                      <span>
+                        <strong>Energia elétrica</strong>
+                        <small class="text-muted">Consumo mensal em kWh</small>
+                      </span>
+                    </label>
+                    <label class="tipo-option" for="tipoAgua">
+                      <input class="tipo-radio" type="radio" name="tipoConsumoOpcao" id="tipoAgua" value="agua">
+                      <span class="tipo-icon tipo-icon-agua"><i class="bi bi-droplet-fill"></i></span>
+                      <span>
+                        <strong>Água</strong>
+                        <small class="text-muted">Consumo mensal em m³</small>
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
 
-                <!-- Dados de consumo -->
-                <div class="row g-3 mb-2">
+                <hr class="my-4">
+<div class="row g-3 mb-2">
                   <div class="col-md-6">
                     <label for="consumoValor" class="form-label" id="labelConsumo">Consumo em kWh *</label>
                     <div class="input-group">
@@ -263,56 +835,146 @@
                 </div>
 
                 <hr class="my-4">
-
-                <!-- Eletrodomésticos -->
-                <h6 class="fw-bold mb-1"><i class="bi bi-house-gear me-1"></i>Quais eletrodomésticos você usa com frequência?</h6>
-                <p class="text-muted small mb-3">Marque e informe a quantidade de vezes de uso semanal aproximado. Isso nos ajuda a montar dicas de economia personalizadas.</p>
+<h6 class="fw-bold mb-1" id="tituloHabitos"><i class="bi bi-house-gear me-1"></i>Quais eletrodomésticos você usa com frequência?</h6>
+                <p class="text-muted small mb-3" id="descricaoHabitos">Selecione os aparelhos de uso residencial comum ou relevante em Sorocaba. O consumo médio exibido é uma estimativa e pode variar conforme o modelo e o tempo de uso.</p>
 
                 <div class="row g-3" id="listaEletrodomesticos">
-                  <!-- Chuveiro elétrico -->
-                  <div class="col-6 col-md-3">
+<div class="col-6 col-md-3">
                     <div class="appliance-box">
                       <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input eletro-checkbox" type="checkbox" id="chk_chuveiro" data-nome="Chuveiro elétrico" data-icon="bi-droplet-fill">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_geladeira" data-nome="Geladeira" data-icon="bi-door-closed-fill">
+                        <label class="form-check-label fw-semibold" for="chk_geladeira">
+                          <i class="bi bi-door-closed-fill appliance-icon text-primary d-block mb-1"></i>
+                          Geladeira
+                        </label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 45 kWh/mês por aparelho</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_geladeira">Quantidade</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_geladeira" min="1" max="5" value="1" disabled>
+                      </div>
+                    </div>
+                  </div>
+<div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_chuveiro" data-nome="Chuveiro elétrico" data-icon="bi-droplet-fill">
                         <label class="form-check-label fw-semibold" for="chk_chuveiro">
                           <i class="bi bi-droplet-fill appliance-icon text-primary d-block mb-1"></i>
                           Chuveiro elétrico
                         </label>
                       </div>
+                      <div class="small text-muted mb-2">≈ 67 kWh/mês com 14 usos/semana</div>
                       <div class="qty-control">
                         <label class="form-label small mb-1" for="qtd_chuveiro">Usos/semana</label>
                         <input type="number" class="form-control form-control-sm" id="qtd_chuveiro" min="1" max="70" value="14" disabled>
                       </div>
                     </div>
                   </div>
-
-                  <!-- Máquina de lavar -->
-                  <div class="col-6 col-md-3">
+<div class="col-6 col-md-3">
                     <div class="appliance-box">
                       <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input eletro-checkbox" type="checkbox" id="chk_lavadora" data-nome="Máquina de lavar roupa" data-icon="bi-basket-fill">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_lavadora" data-nome="Máquina de lavar roupa" data-icon="bi-basket-fill">
                         <label class="form-check-label fw-semibold" for="chk_lavadora">
                           <i class="bi bi-basket-fill appliance-icon text-success d-block mb-1"></i>
                           Máq. de lavar
                         </label>
                       </div>
+                      <div class="small text-muted mb-2">≈ 10 kWh/mês com 4 ciclos/semana</div>
                       <div class="qty-control">
                         <label class="form-label small mb-1" for="qtd_lavadora">Usos/semana</label>
                         <input type="number" class="form-control form-control-sm" id="qtd_lavadora" min="1" max="20" value="4" disabled>
                       </div>
                     </div>
                   </div>
-
-                  <!-- Ferro de passar -->
-                  <div class="col-6 col-md-3">
+<div class="col-6 col-md-3">
                     <div class="appliance-box">
                       <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input eletro-checkbox" type="checkbox" id="chk_ferro" data-nome="Ferro de passar" data-icon="bi-lightning-charge-fill">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_tv" data-nome="Televisão" data-icon="bi-tv-fill">
+                        <label class="form-check-label fw-semibold" for="chk_tv"><i class="bi bi-tv-fill appliance-icon text-info d-block mb-1"></i>Televisão</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 9 kWh/mês com 3 h/dia</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_tv">Horas/dia</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_tv" min="1" max="24" value="3" disabled>
+                      </div>
+                    </div>
+                  </div>
+<div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_iluminacao" data-nome="Iluminação" data-icon="bi-lightbulb-fill">
+                        <label class="form-check-label fw-semibold" for="chk_iluminacao"><i class="bi bi-lightbulb-fill appliance-icon text-warning d-block mb-1"></i>Iluminação</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 7 kWh/mês para 5 lâmpadas LED</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_iluminacao">Nº de lâmpadas</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_iluminacao" min="1" max="50" value="5" disabled>
+                      </div>
+                    </div>
+                  </div>
+<div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_microondas" data-nome="Micro-ondas" data-icon="bi-grid-3x3-gap-fill">
+                        <label class="form-check-label fw-semibold" for="chk_microondas"><i class="bi bi-grid-3x3-gap-fill appliance-icon text-secondary d-block mb-1"></i>Micro-ondas</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 4 kWh/mês com 4 usos/semana</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_microondas">Usos/semana</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_microondas" min="1" max="50" value="4" disabled>
+                      </div>
+                    </div>
+                  </div>
+<div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_airfryer" data-nome="Air fryer" data-icon="bi-basket2-fill">
+                        <label class="form-check-label fw-semibold" for="chk_airfryer"><i class="bi bi-basket2-fill appliance-icon text-danger d-block mb-1"></i>Air fryer</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 10 kWh/mês com 4 usos/semana</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_airfryer">Usos/semana</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_airfryer" min="1" max="50" value="4" disabled>
+                      </div>
+                    </div>
+                  </div>
+<div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_ar" data-nome="Ar-condicionado" data-icon="bi-snow">
+                        <label class="form-check-label fw-semibold" for="chk_ar"><i class="bi bi-snow appliance-icon text-info d-block mb-1"></i>Ar-condicionado</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 132 kWh/mês com 4 h/dia</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_ar">Horas/dia</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_ar" min="1" max="24" value="4" disabled>
+                      </div>
+                    </div>
+                  </div>
+<div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_ventilador" data-nome="Ventilador" data-icon="bi-wind">
+                        <label class="form-check-label fw-semibold" for="chk_ventilador"><i class="bi bi-wind appliance-icon text-info d-block mb-1"></i>Ventilador</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 10 kWh/mês com 4 h/dia</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_ventilador">Horas/dia</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_ventilador" min="1" max="24" value="4" disabled>
+                      </div>
+                    </div>
+                  </div>
+<div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_ferro" data-nome="Ferro de passar" data-icon="bi-lightning-charge-fill">
                         <label class="form-check-label fw-semibold" for="chk_ferro">
                           <i class="bi bi-lightning-charge-fill appliance-icon text-warning d-block mb-1"></i>
                           Ferro de passar
                         </label>
                       </div>
+                      <div class="small text-muted mb-2">≈ 12 kWh/mês com 3 usos/semana</div>
                       <div class="qty-control">
                         <label class="form-label small mb-1" for="qtd_ferro">Usos/semana</label>
                         <input type="number" class="form-control form-control-sm" id="qtd_ferro" min="1" max="20" value="3" disabled>
@@ -320,27 +982,94 @@
                     </div>
                   </div>
 
-                  <!-- Ar-condicionado -->
+                </div>
+<div class="row g-3 d-none" id="listaHabitosAgua">
                   <div class="col-6 col-md-3">
                     <div class="appliance-box">
                       <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input eletro-checkbox" type="checkbox" id="chk_ar" data-nome="Ar-condicionado" data-icon="bi-snow">
-                        <label class="form-check-label fw-semibold" for="chk_ar">
-                          <i class="bi bi-snow appliance-icon text-info d-block mb-1"></i>
-                          Ar-condicionado
-                        </label>
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_banho_agua" data-nome="Chuveiro/banho" data-icon="bi-droplet-fill">
+                        <label class="form-check-label fw-semibold" for="chk_banho_agua"><i class="bi bi-droplet-fill appliance-icon text-primary d-block mb-1"></i>Chuveiro/banho</label>
                       </div>
+                      <div class="small text-muted mb-2">≈ 10 litros por minuto</div>
                       <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_ar">Horas/dia</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_ar" min="1" max="24" value="4" disabled>
+                        <label class="form-label small mb-1" for="qtd_banho_agua">Minutos/dia</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_banho_agua" min="1" max="120" value="15" disabled>
                       </div>
                     </div>
                   </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_lavadora_agua" data-nome="Máquina de lavar roupa" data-icon="bi-basket-fill">
+                        <label class="form-check-label fw-semibold" for="chk_lavadora_agua"><i class="bi bi-basket-fill appliance-icon text-success d-block mb-1"></i>Máq. de lavar</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 135 litros por ciclo</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_lavadora_agua">Usos/semana</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_lavadora_agua" min="1" max="20" value="3" disabled>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_torneira" data-nome="Torneira" data-icon="bi-faucet-fill">
+                        <label class="form-check-label fw-semibold" for="chk_torneira"><i class="bi bi-faucet-fill appliance-icon text-info d-block mb-1"></i>Torneira</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 10 litros por minuto</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_torneira">Minutos/dia</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_torneira" min="1" max="120" value="10" disabled>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_vaso" data-nome="Vaso sanitário" data-icon="bi-badge-wc-fill">
+                        <label class="form-check-label fw-semibold" for="chk_vaso"><i class="bi bi-badge-wc-fill appliance-icon text-secondary d-block mb-1"></i>Vaso sanitário</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 6 litros por descarga</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_vaso">Descargas/dia</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_vaso" min="1" max="50" value="5" disabled>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <div class="appliance-box">
+                      <div class="form-check d-flex align-items-center gap-2 mb-2">
+                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_mangueira" data-nome="Mangueira" data-icon="bi-moisture">
+                        <label class="form-check-label fw-semibold" for="chk_mangueira"><i class="bi bi-moisture appliance-icon text-primary d-block mb-1"></i>Mangueira</label>
+                      </div>
+                      <div class="small text-muted mb-2">≈ 12 litros por minuto</div>
+                      <div class="qty-control">
+                        <label class="form-label small mb-1" for="qtd_mangueira">Minutos/semana</label>
+                        <input type="number" class="form-control form-control-sm" id="qtd_mangueira" min="1" max="300" value="15" disabled>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="fonte-oficial mt-3">
+                  <i class="bi bi-journal-check me-1"></i>
+                  <strong>Referência da seleção:</strong> os eletrodomésticos usam como base a PPH 2019,
+                  última pesquisa oficial detalhada encontrada sobre posse e hábitos residenciais,
+                  analisada em relatório do Ministério de Minas e Energia publicado em 2024.
+                  A base geral representa o perfil da região Sudeste. Air fryer e ar-condicionado também foram
+                  incluídos pela relevância atual no consumo residencial, sem atribuir a eles um percentual municipal de Sorocaba.
+                  <a href="https://www.gov.br/mme/pt-br/assuntos/ee/publicacoes-e-estudos/RelatorioP4_Final.pdf"
+                     target="_blank" rel="noopener noreferrer">Consultar relatório do MME</a>.
                 </div>
 
                 <div id="alertaFormulario" class="alert alert-danger mt-4 d-none" role="alert"></div>
 
-                <div class="d-grid d-md-flex justify-content-md-end mt-4">
+                <div class="d-grid d-md-flex justify-content-md-center mt-4">
                   <button type="submit" class="btn btn-eco-primary btn-lg px-4">
                     <i class="bi bi-graph-up-arrow me-1"></i> Calcular e Analisar
                   </button>
@@ -351,9 +1080,83 @@
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- ===================== TELA 2: COMPARADOR ===================== -->
+      <div class="quick-benefits" aria-label="Benefícios do acompanhamento">
+        <div class="benefit-item">
+          <span class="benefit-icon"><i class="bi bi-bar-chart-fill"></i></span>
+          <span><strong>Visualize seus hábitos</strong><small>Entenda seu consumo de forma clara.</small></span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon"><i class="bi bi-wallet2"></i></span>
+          <span><strong>Economize dinheiro</strong><small>Pequenas mudanças geram resultados.</small></span>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon"><i class="bi bi-leaf-fill"></i></span>
+          <span><strong>Preserve recursos</strong><small>Reduza seu impacto no ambiente.</small></span>
+        </div>
+      </div>
+    </section>
+    <!-- Histórico -->
+    <section id="telaHistorico" class="screen">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <div>
+          <h2 class="h4 fw-bold mb-1"><i class="bi bi-clock-history me-2 text-primary"></i>Histórico de consumo</h2>
+          <p class="text-muted mb-0">Seus registros ficam salvos neste navegador.</p>
+        </div>
+        <button type="button" id="btnHistoricoHome" class="btn btn-outline-eco">
+          <i class="bi bi-house-door me-1"></i> Voltar ao início
+        </button>
+      </div>
+
+      <div id="historicoVazio" class="history-empty d-none">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+        <strong>Nenhum consumo registrado ainda.</strong>
+        <p class="mb-0 mt-1">Faça uma análise para ela aparecer aqui.</p>
+      </div>
+
+      <div id="listaHistorico" class="row g-3"></div>
+    </section>
+    <!-- Dicas -->
+    <section id="telaDicas" class="screen">
+      <div class="mb-4">
+        <span class="badge rounded-pill text-bg-success mb-2">Guia prático</span>
+        <h2 class="h4 fw-bold mb-2"><i class="bi bi-leaf-fill me-2 text-success"></i>Dicas para economizar em casa</h2>
+        <p class="text-muted mb-0">Pequenas mudanças na rotina ajudam a reduzir o consumo e o valor das contas.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-12 col-xl-6">
+          <div class="card card-eco h-100">
+            <div class="card-header header-eco">
+              <i class="bi bi-lightning-charge-fill me-2"></i>Economia de energia
+            </div>
+            <div class="card-body p-4">
+              <div class="dica-item">Reduza alguns minutos do banho elétrico e use a posição verão quando possível.</div>
+              <div class="dica-item">Use a máquina de lavar com a carga completa e evite vários ciclos pequenos.</div>
+              <div class="dica-item">Desligue aparelhos da tomada quando não estiverem em uso.</div>
+              <div class="dica-item">Aproveite a iluminação natural e prefira lâmpadas LED.</div>
+              <div class="dica-item mb-0">Mantenha o ar-condicionado em temperatura moderada e portas fechadas.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-6">
+          <div class="card card-eco h-100">
+            <div class="card-header header-agua">
+              <i class="bi bi-droplet-fill me-2"></i>Economia de água
+            </div>
+            <div class="card-body p-4">
+              <div class="dica-item dica-agua">Feche a torneira enquanto escova os dentes ou ensaboa a louça.</div>
+              <div class="dica-item dica-agua">Reduza o tempo de banho e feche o chuveiro ao se ensaboar.</div>
+              <div class="dica-item dica-agua">Verifique vazamentos em torneiras, descargas e registros.</div>
+              <div class="dica-item dica-agua">Reaproveite água da máquina de lavar quando for possível.</div>
+              <div class="dica-item dica-agua mb-0">Prefira balde e vassoura no lugar da mangueira.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Resultado -->
     <section id="tela2" class="screen">
 
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -362,9 +1165,7 @@
           <i class="bi bi-arrow-counterclockwise me-1"></i> Voltar e Registrar Novo Mês
         </button>
       </div>
-
-      <!-- Regra do semáforo -->
-      <div class="row g-4 mb-4">
+<div class="row g-4 mb-4">
         <div class="col-12">
           <div id="semaforoBox" class="semaforo-box">
             <div class="row align-items-center g-3">
@@ -383,18 +1184,24 @@
           </div>
         </div>
       </div>
-
-      <!-- Comparativo lado a lado -->
-      <div class="row g-4 mb-4">
+<div class="row g-4 mb-4">
         <div class="col-md-6">
           <div class="card card-eco h-100">
-            <div class="card-header header-agua">
+            <div class="card-header header-resultado">
               <i class="bi bi-person-fill me-2"></i>Seu consumo
             </div>
             <div class="card-body">
               <div class="d-flex justify-content-between mb-2">
                 <span>Consumo registrado</span>
                 <strong id="consumoUsuarioValor">--</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Pessoas na residência</span>
+                <strong id="moradoresUsuarioValor">--</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Consumo por pessoa</span>
+                <strong id="consumoPessoaValor">--</strong>
               </div>
               <div class="comparativo-barra mb-2">
                 <div id="barraUsuario" class="h-100 d-flex align-items-center justify-content-center text-white fw-bold" style="width: 0%; background-color: var(--agua-azul);">0%</div>
@@ -408,12 +1215,12 @@
         </div>
         <div class="col-md-6">
           <div class="card card-eco h-100">
-            <div class="card-header header-eco">
+            <div class="card-header header-resultado">
               <i class="bi bi-people-fill me-2"></i>Média em Sorocaba
             </div>
             <div class="card-body">
               <div class="d-flex justify-content-between mb-2">
-                <span>Consumo médio</span>
+                <span>Consumo médio residencial</span>
                 <strong id="consumoMediaValor">--</strong>
               </div>
               <div class="comparativo-barra mb-2">
@@ -421,62 +1228,62 @@
               </div>
               <div class="d-flex justify-content-between">
                 <span>Fonte</span>
-                <strong>Estimativa municipal*</strong>
+                <strong id="fonteMedia">Dados oficiais de 2024</strong>
               </div>
+              <div class="fonte-oficial" id="detalheFonteMedia">A fonte usada será exibida conforme o tipo de consumo.</div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Impacto no bolso -->
-      <div class="row g-4 mb-4">
+<div class="row g-4 mb-4">
         <div class="col-12">
           <div class="card card-eco">
-            <div class="card-header header-energia">
+            <div class="card-header header-resultado">
               <i class="bi bi-cash-coin me-2"></i>Impacto no bolso — economia potencial
             </div>
             <div class="card-body">
-              <p class="text-muted small mb-3">Estimativas com base nos eletrodomésticos que você marcou na Tela 1. Pequenos ajustes de rotina, grande economia no fim do mês.</p>
+              <p class="text-muted small mb-3" id="descricaoEconomia">Estimativas com base nos equipamentos ou hábitos que você marcou na Tela 1. Pequenos ajustes de rotina, grande economia no fim do mês.</p>
               <div id="listaEconomia">
-                <!-- gerado via JS -->
-              </div>
+</div>
               <div id="semEletrodomesticos" class="alert alert-info d-none mb-0">
-                Você não marcou nenhum eletrodoméstico específico. Volte à Tela 1 e selecione os que usa para receber dicas personalizadas de economia.
+                Você não marcou nenhuma opção específica. Volte à Tela 1 e selecione seus equipamentos ou hábitos para receber dicas personalizadas.
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Dicas práticas -->
-      <div class="row g-4 mb-4">
+<div class="row g-4 mb-4">
         <div class="col-12">
           <div class="card card-eco">
-            <div class="card-header header-eco">
+            <div class="card-header header-resultado">
               <i class="bi bi-lightbulb-fill me-2"></i>Dicas práticas para o seu perfil
             </div>
             <div class="card-body" id="listaDicas">
-              <!-- gerado via JS -->
-            </div>
+</div>
           </div>
         </div>
       </div>
 
-      <p class="text-muted small">*Valores de média municipal e tarifas são estimativas ilustrativas para fins educacionais, não substituindo dados oficiais da concessionária.</p>
+      <p class="text-muted small" id="notaFonte">
+        *As médias de Sorocaba usam dados oficiais com ano-base 2024. A seleção dos equipamentos usa a PPH 2019,
+        última pesquisa oficial detalhada encontrada, analisada pelo MME em relatório publicado em 2024;
+        ela representa o perfil da região Sudeste. Air fryer e ar-condicionado foram incluídos pela relevância atual
+        no consumo residencial, sem percentual municipal. As estimativas de economia em reais
+        continuam sendo educativas e podem variar conforme a tarifa da conta.
+      </p>
 
     </section>
 
   </main>
 
-  <footer class="text-center py-3">
+  <footer class="text-center py-3" id="rodape">
     <div class="container">
-      EcoGasto &mdash; Monitoramento consciente de água e energia &copy; 2026
+      EcoBrasil &mdash; Monitoramento consciente de água e energia &copy; 2026
     </div>
   </footer>
-
-  <!-- Bootstrap JS via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Script da aplicação -->
-  <script src="script.js"></script>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>
