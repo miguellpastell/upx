@@ -951,3 +951,203 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarTela('tela1');
   }
 });
+/* RELATÓRIO DE HISTÓRICO */
+
+// Organiza os registros por data (mais recente primeiro)
+function ordenarPorData(registros) {
+  return [...registros].sort((a, b) => {
+    const dataA = a.mesReferencia || (a.criadoEm ? String(a.criadoEm).slice(0, 7) : '');
+    const dataB = b.mesReferencia || (b.criadoEm ? String(b.criadoEm).slice(0, 7) : '');
+    return dataB.localeCompare(dataA);
+  });
+}
+
+// Separa registros de Água e Energia
+function separarPorTipo(registros) {
+  const agua = [];
+  const energia = [];
+
+  registros.forEach(r => {
+    if (r.tipoConsumo === 'agua') agua.push(r);
+    else energia.push(r);
+  });
+
+  return { energia, agua };
+}
+
+function formatarDataHoraRelatorio(data = new Date()) {
+  return new Intl.DateTimeFormat('pt-BR', {
+    dateStyle: 'full',
+    timeStyle: 'short'
+  }).format(data);
+}
+
+function montarLinhasTabela(registros, tipo) {
+  if (!registros.length) {
+    return `<tr><td colspan="6" class="sem-registros">
+      Nenhum registro de ${tipo === 'agua' ? 'água' : 'energia'} encontrado.
+    </td></tr>`;
+  }
+
+  const unidade = tipo === 'agua' ? 'm³' : 'kWh';
+
+  return registros.map(r => {
+    const mes = formatarMes(r.mesReferencia);
+    const pessoas = Number(r.quantidadePessoas) || 1;
+    const consumo = Number(r.consumoValor) || 0;
+    const conta = Number(r.valorConta) || 0;
+    const porPessoa = consumo / Math.max(pessoas, 1);
+
+    return `
+      <tr>
+        <td class="mes">${escaparHTML(mes)}</td>
+        <td>${escaparHTML(r.nomeUsuario || '—')}</td>
+        <td class="num">${pessoas}</td>
+        <td class="num"><strong>${consumo.toFixed(1)} ${unidade}</strong></td>
+        <td class="num">${porPessoa.toFixed(1)} ${unidade}</td>
+        <td class="num">${formatarMoeda(conta)}</td>
+      </tr>`;
+  }).join('');
+}
+
+function calcularResumo(registros, tipo) {
+  const unidade = tipo === 'agua' ? 'm³' : 'kWh';
+  const qtd = registros.length;
+  const totalConsumo = registros.reduce((s, r) => s + (Number(r.consumoValor) || 0), 0);
+  const totalConta = registros.reduce((s, r) => s + (Number(r.valorConta) || 0), 0);
+  const media = qtd ? totalConsumo / qtd : 0;
+
+  return `
+    <div class="card-resumo ${tipo}">
+      <h3>${tipo === 'agua' ? '💧 Água' : '⚡ Energia elétrica'}</h3>
+      <ul>
+        <li><span>Registros:</span> <strong>${qtd}</strong></li>
+        <li><span>Consumo total:</span> <strong>${totalConsumo.toFixed(1)} ${unidade}</strong></li>
+        <li><span>Consumo médio:</span> <strong>${media.toFixed(1)} ${unidade}</strong></li>
+        <li><span>Total em contas:</span> <strong>${formatarMoeda(totalConta)}</strong></li>
+      </ul>
+    </div>`;
+}
+
+function gerarHTMLRelatorio() {
+  const historico = recuperarHistorico();
+  if (!historico.length) return null;
+
+  const ordenado = ordenarPorData(historico);
+  const { energia, agua } = separarPorTipo(ordenado);
+
+  const dataGeracao = formatarDataHoraRelatorio();
+  const linhasEnergia = montarLinhasTabela(energia, 'energia');
+  const linhasAgua = montarLinhasTabela(agua, 'agua');
+  const resumoEnergia = calcularResumo(energia, 'energia');
+  const resumoAgua = calcularResumo(agua, 'agua');
+
+  const css = `
+    * { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f4f8fb; color: #183153; margin: 0; padding: 32px 20px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header { background: linear-gradient(135deg, #1677e8 0%, #18a957 100%); color: #fff; padding: 28px 32px; border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.12); margin-bottom: 24px; }
+    header h1 { margin: 0 0 6px; font-size: 26px; }
+    header p { margin: 0; opacity: .92; font-size: 14px; }
+    .resumo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .card-resumo { background: #fff; border-radius: 12px; padding: 18px 22px; box-shadow: 0 3px 12px rgba(45,94,135,.08); border-left: 6px solid #999; }
+    .card-resumo.energia { border-left-color: #18a957; }
+    .card-resumo.agua { border-left-color: #1677e8; }
+    .card-resumo h3 { margin: 0 0 12px; font-size: 17px; }
+    .card-resumo ul { list-style: none; padding: 0; margin: 0; }
+    .card-resumo li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #e5edf5; font-size: 14px; }
+    .card-resumo li:last-child { border-bottom: none; }
+    .card-resumo li span { color: #63718b; }
+    section.secao { background: #fff; border-radius: 12px; padding: 22px 26px; margin-bottom: 24px; box-shadow: 0 3px 12px rgba(45,94,135,.08); }
+    section.secao h2 { margin: 0 0 16px; font-size: 19px; }
+    section.secao.energia h2 { color: #108847; }
+    section.secao.agua h2 { color: #0e5fc5; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead th { background: #f1f7fd; text-align: left; padding: 10px 12px; font-weight: 700; border-bottom: 2px solid #dce8f3; }
+    tbody td { padding: 10px 12px; border-bottom: 1px solid #eef3f8; }
+    tbody tr:nth-child(even) { background: #fafcfe; }
+    td.num { text-align: right; white-space: nowrap; }
+    td.mes { text-transform: capitalize; white-space: nowrap; }
+    td.sem-registros { text-align: center; color: #8894a8; padding: 22px 0; font-style: italic; }
+    footer { text-align: center; font-size: 12px; color: #63718b; margin-top: 12px; padding-top: 14px; border-top: 1px solid #dce8f3; }
+    @media print { body { background: #fff; padding: 0; } header, section.secao, .card-resumo { box-shadow: none; } }
+  `;
+
+  return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Relatório EcoBrasil — Histórico de Consumo</title>
+<style>${css}</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>EcoBrasil — Relatório de Consumo</h1>
+      <p>Histórico completo de consumo de água e energia elétrica</p>
+      <p style="margin-top:6px;font-size:13px;"><strong>Gerado em:</strong> ${escaparHTML(dataGeracao)}</p>
+      <p style="margin-top:2px;font-size:13px;"><strong>Total:</strong> ${ordenado.length} registros (${energia.length} energia / ${agua.length} água)</p>
+    </header>
+
+    <div class="resumo-grid">${resumoEnergia}${resumoAgua}</div>
+
+    <section class="secao energia">
+      <h2>⚡ Energia elétrica</h2>
+      <table>
+        <thead><tr>
+          <th>Mês</th><th>Responsável</th>
+          <th style="text-align:right;">Pessoas</th>
+          <th style="text-align:right;">Consumo</th>
+          <th style="text-align:right;">Por pessoa</th>
+          <th style="text-align:right;">Conta</th>
+        </tr></thead>
+        <tbody>${linhasEnergia}</tbody>
+      </table>
+    </section>
+
+    <section class="secao agua">
+      <h2>💧 Água</h2>
+      <table>
+        <thead><tr>
+          <th>Mês</th><th>Responsável</th>
+          <th style="text-align:right;">Pessoas</th>
+          <th style="text-align:right;">Consumo</th>
+          <th style="text-align:right;">Por pessoa</th>
+          <th style="text-align:right;">Conta</th>
+        </tr></thead>
+        <tbody>${linhasAgua}</tbody>
+      </table>
+    </section>
+
+    <footer>
+      Relatório gerado automaticamente pelo EcoBrasil.<br>
+      Dica: use Ctrl+P (Cmd+P no Mac) para salvar em PDF.
+    </footer>
+  </div>
+</body>
+</html>`;
+}
+
+function baixarRelatorio() {
+  const html = gerarHTMLRelatorio();
+
+  if (!html) {
+    alert('Não há registros no histórico para exportar. Faça uma análise primeiro.');
+    return;
+  }
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const agora = new Date();
+  const dataArquivo = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`;
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `ecobrasil-relatorio-${dataArquivo}.html`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('btnBaixarRelatorio')?.addEventListener('click', baixarRelatorio);

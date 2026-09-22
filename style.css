@@ -1,0 +1,621 @@
+
+:root {
+  --agua-azul: #0d6efd;
+  --agua-azul-escuro: #084298;
+  --eco-verde: #198754;
+  --eco-verde-claro: #d1e7dd;
+  --marca-principal: #0f766e;
+  --marca-principal-escura: #115e59;
+  --marca-suave: #ecfdf5;
+  --energia-amarelo: #ffc107;
+  --energia-amarelo-escuro: #997404;
+  --alerta-vermelho: #dc3545;
+  --alerta-vermelho-claro: #f8d7da;
+  --fundo-suave: #f4f8fb;
+
+  --azul: #1677e8;
+  --azul-escuro: #0e5fc5;
+  --azul-suave: #eaf5ff;
+  --verde: #18a957;
+  --verde-escuro: #108847;
+  --verde-suave: #eef9f1;
+  --texto: #183153;
+  --texto-suave: #63718b;
+  --borda: #dce8f3;
+  --fundo: #f4faff;
+  --branco: #ffffff;
+}
+
+/* ---------- Base ---------- */
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  color: #212529;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--fundo-suave);
+  background:
+    radial-gradient(circle at 86% 4%, rgba(22,119,232,.08), transparent 24rem),
+    linear-gradient(135deg, #f7fcff 0%, var(--fundo) 100%);
+}
+
+.app-layout { min-height: 100vh; }
+
+/* ---------- Sidebar ---------- */
+.side-panel {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1030;
+  width: 252px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 1.25rem;
+  background: rgba(255,255,255,.96);
+  border-right: 1px solid var(--borda);
+  box-shadow: 8px 0 30px rgba(42,92,135,.06);
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin-bottom: 2.4rem;
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.brand-drop {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.brand-symbol {
+  width: 52px;
+  height: 52px;
+  display: block;
+  filter: drop-shadow(0 3px 6px rgba(22,119,232,.16));
+}
+
+.brand-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+
+.brand-title .eco { color: var(--azul); }
+.brand-title .brasil { color: var(--verde); }
+.brand-subtitle { color: var(--texto-suave); font-size: .72rem; margin-top: .35rem; }
+
+.side-nav { display: grid; gap: .55rem; }
+
+.side-nav a {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  min-height: 48px;
+  padding: .75rem .95rem;
+  color: var(--texto);
+  text-decoration: none;
+  border-radius: .8rem;
+  font-weight: 500;
+  transition: .18s ease;
+}
+
+.side-nav a:hover,
+.side-nav a.active {
+  color: var(--azul-escuro);
+  background: var(--azul-suave);
+}
+
+.side-nav i { width: 22px; font-size: 1.15rem; text-align: center; }
+
+.side-goal {
+  margin-top: auto;
+  padding: 1rem;
+  border: 1px solid #d6edda;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #f6fff8, var(--verde-suave));
+}
+
+.side-goal strong { color: var(--verde-escuro); }
+.side-goal .progress { height: 8px; background: #dce8df; }
+.side-goal .progress-bar { background: linear-gradient(90deg, #69c84a, var(--verde)); }
+
+/* ---------- Layout principal ---------- */
+.content-shell { min-height: 100vh; margin-left: 252px; }
+
+.app-header {
+  padding: 1rem 1.5rem .35rem;
+  color: var(--texto);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.top-banner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.top-message {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  min-width: min(560px, 100%);
+  padding: .85rem 1.25rem;
+  border: 1px solid #e4edf5;
+  border-radius: 1rem;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 7px 22px rgba(52,100,140,.08);
+}
+
+.top-message-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--verde);
+  background: var(--verde-suave);
+  border-radius: 50%;
+  font-size: 1.4rem;
+}
+
+.top-message strong { color: var(--azul-escuro); }
+.top-message p { margin: .15rem 0 0; color: var(--texto-suave); font-size: .9rem; }
+
+.location-badge {
+  padding: .75rem 1rem;
+  border: 0;
+  color: var(--azul-escuro);
+  background: var(--azul-suave);
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+main.container {
+  max-width: 1240px;
+  padding-top: .6rem;
+}
+
+/* ---------- Cards ---------- */
+.card-eco {
+  overflow: hidden;
+  border: 1px solid var(--borda);
+  border-radius: 1rem;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 10px 28px rgba(45,94,135,.08);
+}
+
+.card-eco .card-header,
+.header-agua,
+.header-energia,
+.header-eco,
+.header-resultado {
+  padding: 1.15rem 1.5rem;
+  color: var(--verde-escuro);
+  background: #fff;
+  border-bottom: 1px solid #edf2f6;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 1rem 1rem 0 0 !important;
+}
+
+/* ---------- Formulário ---------- */
+.form-label { color: var(--texto); }
+
+.form-control,
+.input-group-text {
+  min-height: 44px;
+  border-color: #cfdeec;
+  background: #fff;
+}
+
+.form-control:focus {
+  border-color: #7cb8f3;
+  box-shadow: 0 0 0 .2rem rgba(22,119,232,.12);
+}
+
+/* ---------- Seleção tipo de consumo ---------- */
+.tipo-consumo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.tipo-consumo-fieldset {
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
+  text-align: left;
+}
+
+.tipo-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-height: 102px;
+  padding: 1.2rem 1.35rem;
+  border: 1px solid #cfe4d3;
+  border-radius: 1rem;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: none;
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.tipo-option:hover {
+  border-color: #8bb9ee;
+  transform: translateY(-1px);
+}
+
+.tipo-option::after {
+  content: '';
+  width: 22px;
+  height: 22px;
+  margin-left: auto;
+  border: 1.5px solid #bfd0df;
+  border-radius: 50%;
+}
+
+.tipo-option:has(.tipo-radio:checked) {
+  border-color: var(--azul);
+  background: linear-gradient(135deg, #f7fbff, var(--azul-suave));
+  box-shadow: 0 0 0 2px rgba(22,119,232,.08);
+}
+
+.tipo-option:has(.tipo-radio:checked)::after {
+  content: '\2713';
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--azul);
+  border-color: var(--azul);
+  font-size: .75rem;
+  font-weight: 800;
+}
+
+.tipo-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tipo-icon {
+  width: 58px;
+  height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: var(--azul);
+  background: var(--azul-suave);
+  border-radius: 50%;
+  font-size: 1.55rem;
+}
+
+.tipo-icon-energia {
+  color: var(--verde) !important;
+  background: var(--verde-suave) !important;
+}
+
+.tipo-icon-energia i { color: var(--verde) !important; }
+
+.tipo-option[for="tipoEnergia"] { border-color: #cfe8d5; }
+
+.tipo-icon-agua {
+  color: var(--azul) !important;
+  background: var(--azul-suave) !important;
+}
+
+.tipo-icon-agua i { color: var(--azul) !important; }
+
+.tipo-option[for="tipoAgua"] { border-color: #d2e5f8; }
+
+.tipo-option[for="tipoEnergia"]:has(.tipo-radio:checked) {
+  border-color: var(--verde);
+  background: linear-gradient(135deg, #fbfffc, var(--verde-suave));
+  box-shadow: 0 0 0 2px rgba(24,169,87,.08);
+}
+
+.tipo-option[for="tipoEnergia"]:has(.tipo-radio:checked)::after {
+  background: var(--verde);
+  border-color: var(--verde);
+}
+
+.tipo-option[for="tipoAgua"]:has(.tipo-radio:checked) {
+  border-color: var(--azul);
+  background: linear-gradient(135deg, #fafdff, var(--azul-suave));
+  box-shadow: 0 0 0 2px rgba(22,119,232,.08);
+}
+
+.tipo-option[for="tipoAgua"]:has(.tipo-radio:checked)::after {
+  background: var(--azul);
+  border-color: var(--azul);
+}
+
+/* ---------- Appliance boxes ---------- */
+.appliance-box {
+  border: 1px solid var(--borda);
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 0.9rem;
+  height: 100%;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(50,98,137,.04);
+  transition: all 0.15s ease-in-out;
+}
+
+.appliance-box:hover {
+  border-color: #84b7e7;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(0,0,0,.07);
+}
+
+.appliance-box:has(input:checked) {
+  border-color: var(--verde);
+  background: var(--verde-suave);
+}
+
+body[data-tipo="agua"] .appliance-box:has(input:checked) {
+  border-color: var(--azul);
+  background: var(--azul-suave);
+}
+
+.appliance-icon { font-size: 1.6rem; }
+
+.qty-control input {
+  max-width: 60px;
+  text-align: center;
+}
+
+/* ---------- Botões ---------- */
+.btn-eco-primary {
+  min-width: 330px;
+  padding: .8rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--verde-escuro), #22bd62);
+  box-shadow: 0 8px 18px rgba(24,169,87,.2);
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-eco-primary:hover {
+  background: linear-gradient(90deg, #0b743b, var(--verde));
+  color: #fff;
+}
+
+body[data-tipo="agua"] .btn-eco-primary {
+  background: linear-gradient(90deg, var(--azul-escuro), #2e92f2);
+  box-shadow: 0 8px 18px rgba(22,119,232,.2);
+}
+
+body[data-tipo="agua"] .btn-eco-primary:hover {
+  background: linear-gradient(90deg, #0b53a9, var(--azul));
+}
+
+.btn-outline-eco {
+  border: 1px solid var(--azul);
+  color: var(--azul);
+  border-radius: 999px;
+  font-weight: 600;
+  background: transparent;
+  padding: .55rem 1.1rem;
+  transition: .15s ease;
+}
+
+.btn-outline-eco:hover {
+  background-color: var(--azul);
+  color: #fff;
+}
+
+/* ---------- Semáforo ---------- */
+.semaforo-box {
+  border: 1px solid var(--borda);
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(45,94,135,.07);
+  transition: all 0.3s ease;
+}
+
+.semaforo-verde,
+.semaforo-amarelo,
+.semaforo-vermelho { border-color: var(--borda); background: #fff; }
+
+.semaforo-luz {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.luz-verde { background: var(--verde); }
+.luz-amarela { background: var(--azul); }
+.luz-vermelha { background: var(--azul-escuro); }
+
+/* ---------- Comparativo ---------- */
+.comparativo-barra {
+  height: 24px;
+  border-radius: 999px;
+  overflow: hidden;
+  background-color: #e8f0f6;
+}
+
+/* ---------- Cards secundários ---------- */
+.economia-card {
+  border-left: 4px solid var(--verde);
+  background-color: #f7fcf8;
+  border-radius: 0 0.6rem 0.6rem 0;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.7rem;
+}
+
+.economia-valor {
+  color: var(--marca-principal-escura);
+  font-weight: 700;
+}
+
+.dica-item {
+  border-left: 4px solid var(--azul);
+  background-color: #f8fbfe;
+  border-radius: 0 0.6rem 0.6rem 0;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.6rem;
+  box-shadow: none;
+}
+
+.dica-item.dica-agua { border-left-color: var(--azul); }
+
+.fonte-oficial {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #e5e7eb;
+  color: #5f6b76;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.badge-tipo { font-size: 0.75rem; }
+
+/* ---------- Navegação entre telas ---------- */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ---------- Validação ---------- */
+.invalid-feedback { display: none; }
+
+.was-validated .form-control:invalid ~ .invalid-feedback,
+.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+
+/* ---------- Quick benefits ---------- */
+.quick-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1.1rem 1.35rem;
+  border: 1px solid var(--borda);
+  border-radius: 1rem;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 8px 24px rgba(45,94,135,.06);
+}
+
+.benefit-item { display: flex; align-items: center; gap: .8rem; }
+
+.benefit-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--azul);
+  background: var(--azul-suave);
+  border-radius: 50%;
+}
+
+.benefit-item:nth-child(2) .benefit-icon { color: var(--verde); background: var(--verde-suave); }
+.benefit-item strong { display: block; font-size: .9rem; }
+.benefit-item small { color: var(--texto-suave); }
+
+/* ---------- Histórico ---------- */
+.history-card {
+  height: 100%;
+  padding: 1.1rem;
+  border: 1px solid var(--borda);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(45,94,135,.06);
+}
+
+.history-type {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .35rem .65rem;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.history-type.energia { color: var(--verde-escuro); background: var(--verde-suave); }
+.history-type.agua { color: var(--azul-escuro); background: var(--azul-suave); }
+
+.history-empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--texto-suave);
+  border: 1px dashed #bfd2e3;
+  border-radius: 1rem;
+  background: rgba(255,255,255,.72);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  color: #6c757d;
+  font-size: 0.85rem;
+  border-top: 1px solid var(--borda);
+  background: rgba(255,255,255,.7);
+}
+
+/* =========================================================
+   Responsivo
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+  .side-panel {
+    position: static;
+    width: 100%;
+    padding: 1rem;
+    display: block;
+    border-right: 0;
+    border-bottom: 1px solid var(--borda);
+  }
+  .brand-lockup { margin-bottom: .8rem; }
+  .brand-drop { width: 40px; height: 40px; }
+  .brand-symbol { width: 40px; height: 40px; }
+  .side-nav { grid-template-columns: repeat(4, 1fr); }
+  .side-nav a { justify-content: center; padding: .65rem; font-size: .82rem; }
+  .side-nav a:nth-child(5), .side-goal { display: none; }
+  .content-shell { margin-left: 0; }
+  .top-banner { grid-template-columns: 1fr; }
+  .top-message { justify-self: stretch; min-width: 0; }
+  .location-badge { justify-self: start; margin-top: 0; }
+}
+
+@media (max-width: 767.98px) {
+  .app-header { padding: .8rem .5rem .2rem; }
+  main.container { padding-inline: .75rem; }
+  .side-nav a span { display: none; }
+  .tipo-consumo-grid, .quick-benefits { grid-template-columns: 1fr; }
+  .btn-eco-primary { min-width: 0; width: 100%; }
+  .card-eco .card-body { padding: 1.15rem !important; }
+}
+
+@media (max-width: 576px) {
+  .app-header h1 { font-size: 1.4rem; }
+  .tipo-consumo-grid { grid-template-columns: 1fr; }
+  .location-badge { margin-top: 0.8rem; }
+}
