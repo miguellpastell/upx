@@ -11,6 +11,7 @@
 </head>
 <body id="topo">
   <div class="app-layout">
+
     <!-- Menu lateral -->
     <aside class="side-panel" aria-label="Navegação principal">
       <a class="brand-lockup" href="#topo" id="logoHome" aria-label="EcoBrasil - início">
@@ -62,6 +63,7 @@
       </header>
 
   <main class="container pb-5">
+
     <!-- Formulário -->
     <section id="tela1" class="screen active">
       <div class="row g-4">
@@ -397,6 +399,7 @@
         </div>
       </div>
     </section>
+
     <!-- Histórico -->
     <section id="telaHistorico" class="screen">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -422,6 +425,7 @@
 
       <div id="listaHistorico" class="row g-3"></div>
     </section>
+    
     <!-- Dicas -->
     <section id="telaDicas" class="screen">
       <div class="mb-4">
@@ -462,6 +466,7 @@
         </div>
       </div>
     </section>
+
     <!-- Resultado -->
     <section id="tela2" class="screen">
 
@@ -579,7 +584,222 @@
       </p>
 
     </section>
+        <!-- Sobre -->
+    <section id="telaSobre" class="screen">
+      <div class="mb-4">
+        <span class="badge rounded-pill text-bg-success mb-2">Sobre o projeto</span>
+        <h2 class="h4 fw-bold mb-2"><i class="bi bi-info-circle me-2 text-primary"></i>EcoBrasil</h2>
+        <p class="text-muted mb-0">Monitoramento consciente de água e energia em Sorocaba - SP.</p>
+      </div>
 
+      <div class="row g-4">
+        <!-- O que é -->
+        <div class="col-12 col-xl-6">
+          <div class="card card-eco h-100">
+            <div class="card-header header-eco">
+              <i class="bi bi-lightbulb me-2"></i>O que é o EcoBrasil
+            </div>
+            <div class="card-body p-4">
+              <p class="mb-3">
+                O <strong>EcoBrasil</strong> é um projeto <strong>acadêmico</strong> desenvolvido como
+                trabalho da disciplina de Desenvolvimento Web. Ele tem como objetivo ajudar
+                moradores de <strong>Sorocaba - SP</strong> a entender e comparar seu consumo
+                residencial de <strong>água</strong> e <strong>energia elétrica</strong> com as
+                médias oficiais do município.
+              </p>
+              <p class="mb-0 text-muted small">
+                Tudo é feito direto no navegador: nenhum dado pessoal é enviado para servidores.
+                Os registros ficam salvos apenas no <code>localStorage</code> do seu dispositivo.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objetivo -->
+        <div class="col-12 col-xl-6">
+          <div class="card card-eco h-100">
+            <div class="card-header header-eco">
+              <i class="bi bi-bullseye me-2"></i>Nosso objetivo
+            </div>
+            <div class="card-body p-4">
+              <ul class="mb-0 ps-3">
+                <li class="mb-2">Promover <strong>educação ambiental</strong> a partir de dados reais.</li>
+                <li class="mb-2">Mostrar como pequenas mudanças de hábito geram <strong>economia financeira</strong>.</li>
+                <li class="mb-2">Facilitar o acesso a <strong>dados oficiais</strong> de consumo médio.</li>
+                <li class="mb-0">Incentivar o <strong>uso consciente</strong> de recursos naturais.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quem somos -->
+        <div class="col-12">
+          <div class="card card-eco">
+            <div class="card-header header-eco">
+              <i class="bi bi-people-fill me-2"></i>Quem somos
+            </div>
+            <div class="card-body p-4">
+              <p class="mb-3">
+                Somos estudantes do curso de <strong>Análise e Desenvolvimento de Sistemas</strong>.
+                Este projeto faz parte das nossas atividades acadêmicas e foi desenvolvido com
+                foco em <strong>acessibilidade</strong>, <strong>transparência de dados</strong> e
+                <strong>conscientização ambiental</strong>.
+              </p>
+
+              <div class="row g-3">
+                <div class="col-6 col-md-4 col-lg-3">
+                  <div class="integrante-card">
+                    <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
+                    <strong>Nome do Integrante 1</strong>
+                    <small class="d-block text-muted">Desenvolvimento Front-end</small>
+                  </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                  <div class="integrante-card">
+                    <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
+                    <strong>Nome do Integrante 2</strong>
+                    <small class="d-block text-muted">Design & UX</small>
+                  </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                  <div class="integrante-card">
+                    <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
+                    <strong>Nome do Integrante 3</strong>
+                    <small class="d-block text-muted">Pesquisa de dados</small>
+                  </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                  <div class="integrante-card">
+                    <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
+                    <strong>Nome do Integrante 4</strong>
+                    <small class="d-block text-muted">Documentação</small>
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-muted small mb-0 mt-3">
+                <i class="bi bi-pencil me-1"></i>
+                <em>Substitua os nomes e funções acima pelos dados reais da sua equipe.</em>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fontes de dados -->
+        <div class="col-12">
+          <div class="card card-eco">
+            <div class="card-header header-eco">
+              <i class="bi bi-journal-text me-2"></i>Fontes oficiais utilizadas
+            </div>
+            <div class="card-body p-4">
+              <p class="text-muted small mb-3">
+                Todos os dados usados para cálculo de médias e comparações vêm de fontes
+                públicas oficiais. Abaixo, cada uma com sua finalidade.
+              </p>
+
+              <div class="fonte-card">
+                <div class="d-flex align-items-start gap-3">
+                  <span class="fonte-icon energia"><i class="bi bi-lightning-charge-fill"></i></span>
+                  <div>
+                    <strong>Anuário de Energéticos por Município do Estado de São Paulo 2025</strong>
+                    <small class="d-block text-muted mb-2">
+                      Ano-base 2024 — página 39 · Secretaria de Energia e Mineração do Estado de SP
+                    </small>
+                    <p class="small mb-2">
+                      Utilizado para calcular a <strong>média mensal de consumo residencial de energia</strong> em Sorocaba:
+                      <code>825.847.560 kWh ÷ 326.343 consumidores ÷ 12 meses = 210,88 kWh</code>.
+                    </p>
+                    <a href="https://dadosenergeticos.energia.sp.gov.br/" target="_blank" rel="noopener noreferrer" class="small">
+                      Consultar fonte oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fonte-card">
+                <div class="d-flex align-items-start gap-3">
+                  <span class="fonte-icon agua"><i class="bi bi-droplet-fill"></i></span>
+                  <div>
+                    <strong>SINISA — Sistema Nacional de Informações sobre Saneamento</strong>
+                    <small class="d-block text-muted mb-2">
+                      Indicadores de Água · Base Municipal 2024 (retificação) · Município de Sorocaba
+                    </small>
+                    <p class="small mb-2">
+                      Utilizado para o <strong>consumo médio mensal de água por economia</strong>
+                      (indicador IAG2009): <code>13,18 m³/economia/mês</code>.
+                    </p>
+                    <a href="https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/saneamento/sinisa" target="_blank" rel="noopener noreferrer" class="small">
+                      Consultar fonte oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fonte-card">
+                <div class="d-flex align-items-start gap-3">
+                  <span class="fonte-icon mme"><i class="bi bi-file-earmark-text-fill"></i></span>
+                  <div>
+                    <strong>PPH 2019 — Pesquisa de Posse de Equipamentos e Hábitos de Uso</strong>
+                    <small class="d-block text-muted mb-2">
+                      Relatório MME publicado em 2024 · Região Sudeste
+                    </small>
+                    <p class="small mb-2">
+                      Utilizada como <strong>base metodológica</strong> para a seleção de eletrodomésticos
+                      e hábitos residenciais apresentados no formulário. A pesquisa representa o
+                      perfil médio da região Sudeste.
+                    </p>
+                    <a href="https://www.gov.br/mme/pt-br/assuntos/ee/publicacoes-e-estudos/RelatorioP4_Final.pdf" target="_blank" rel="noopener noreferrer" class="small">
+                      Consultar relatório (PDF) <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tecnologias -->
+        <div class="col-12 col-xl-6">
+          <div class="card card-eco h-100">
+            <div class="card-header header-eco">
+              <i class="bi bi-code-slash me-2"></i>Tecnologias utilizadas
+            </div>
+            <div class="card-body p-4">
+              <div class="tech-badges">
+                <span class="tech-badge html5"><i class="bi bi-filetype-html me-1"></i>HTML5</span>
+                <span class="tech-badge css3"><i class="bi bi-filetype-css me-1"></i>CSS3</span>
+                <span class="tech-badge js"><i class="bi bi-filetype-js me-1"></i>JavaScript</span>
+                <span class="tech-badge bs"><i class="bi bi-bootstrap-fill me-1"></i>Bootstrap 5</span>
+                <span class="tech-badge bi"><i class="bi bi-icons me-1"></i>Bootstrap Icons</span>
+                <span class="tech-badge ls"><i class="bi bi-database me-1"></i>LocalStorage</span>
+                <span class="tech-badge vercel"><i class="bi bi-cloud-fill me-1"></i>Vercel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aviso -->
+        <div class="col-12 col-xl-6">
+          <div class="card card-eco h-100">
+            <div class="card-header header-eco">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>Aviso importante
+            </div>
+            <div class="card-body p-4">
+              <p class="small mb-2">
+                Este é um projeto <strong>acadêmico e educativo</strong>. As estimativas de economia
+                em reais são baseadas em tarifas médias e podem variar conforme a distribuidora,
+                a bandeira tarifária do mês e o perfil de consumo de cada residência.
+              </p>
+              <p class="small mb-0">
+                As médias de Sorocaba são baseadas em dados oficiais de 2024. Air fryer e
+                ar-condicionado foram incluídos pela relevância atual no consumo residencial,
+                sem atribuição de percentual municipal específico.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="text-center py-3" id="rodape">
