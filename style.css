@@ -580,9 +580,7 @@ footer {
   background: rgba(255,255,255,.7);
 }
 
-/* =========================================================
-   Responsivo
-   ========================================================= */
+/* Responsivo*/
 
 @media (max-width: 991.98px) {
   .side-panel {
@@ -596,9 +594,23 @@ footer {
   .brand-lockup { margin-bottom: .8rem; }
   .brand-drop { width: 40px; height: 40px; }
   .brand-symbol { width: 40px; height: 40px; }
-  .side-nav { grid-template-columns: repeat(4, 1fr); }
-  .side-nav a { justify-content: center; padding: .65rem; font-size: .82rem; }
-  .side-nav a:nth-child(5), .side-goal { display: none; }
+
+  .side-nav { grid-template-columns: repeat(5, 1fr); }
+  .side-nav a {
+    justify-content: center;
+    padding: .55rem .35rem;
+    font-size: .72rem;
+    gap: .35rem;
+    flex-direction: column;
+  }
+  .side-nav a i { font-size: 1.15rem; }
+
+  /* ✅ Card "Meta do mês"*/
+  .side-goal {
+    margin-top: 1rem;
+    padding: .85rem 1rem;
+  }
+
   .content-shell { margin-left: 0; }
   .top-banner { grid-template-columns: 1fr; }
   .top-message { justify-self: stretch; min-width: 0; }
@@ -608,7 +620,6 @@ footer {
 @media (max-width: 767.98px) {
   .app-header { padding: .8rem .5rem .2rem; }
   main.container { padding-inline: .75rem; }
-  .side-nav a span { display: none; }
   .tipo-consumo-grid, .quick-benefits { grid-template-columns: 1fr; }
   .btn-eco-primary { min-width: 0; width: 100%; }
   .card-eco .card-body { padding: 1.15rem !important; }
