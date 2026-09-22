@@ -144,8 +144,12 @@ function mostrarTela(idTela) {
     document.getElementById('navHistorico')?.classList.add('active');
   }
 
-  if (idTela === 'telaDicas') {
+    if (idTela === 'telaDicas') {
     document.getElementById('navDicas')?.classList.add('active');
+  }
+
+  if (idTela === 'telaSobre') {
+    document.getElementById('navSobre')?.classList.add('active');
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -935,6 +939,11 @@ document.getElementById('navHistorico')?.addEventListener('click', evento => {
 document.getElementById('navDicas')?.addEventListener('click', evento => {
   evento.preventDefault();
   mostrarTela('telaDicas');
+});
+
+document.getElementById('navSobre')?.addEventListener('click', evento => {
+  evento.preventDefault();
+  mostrarTela('telaSobre');
 });
 
 // Inicialização
