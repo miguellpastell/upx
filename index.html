@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EcoBrasil | Monitor de Água e Energia</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 72'%3E%3Cpath d='M32 3S8 32 8 48a24 24 0 0 0 48 0C56 32 32 3 32 3Z' fill='%231677e8'/%3E%3Cpath d='M29 19h13l-7 13h9L24 57l6-19h-9Z' fill='%2315a85b' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-<link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body id="topo">
   <div class="app-layout">
@@ -29,7 +29,7 @@
         <a href="#formConsumo" id="navConsumo"><i class="bi bi-graph-up-arrow"></i><span>Consumo</span></a>
         <a href="#telaHistorico" id="navHistorico"><i class="bi bi-clock-history"></i><span>Histórico</span></a>
         <a href="#telaDicas" id="navDicas"><i class="bi bi-lightbulb"></i><span>Dicas</span></a>
-        <a href="#rodape" id="navSobre"><i class="bi bi-info-circle"></i><span>Sobre</span></a>
+        <a href="#telaSobre" id="navSobre"><i class="bi bi-info-circle"></i><span>Sobre</span></a>
       </nav>
 
       <div class="side-goal">
@@ -46,7 +46,7 @@
     </aside>
 
     <div class="content-shell">
-<header class="app-header mb-3">
+      <header class="app-header mb-3">
         <div class="top-banner">
           <div class="top-message">
             <span class="top-message-icon"><i class="bi bi-tree-fill"></i></span>
@@ -62,589 +62,595 @@
         </div>
       </header>
 
-  <main class="container pb-5">
+      <main class="container pb-5">
 
-    <!-- Formulário -->
-    <section id="tela1" class="screen active">
-      <div class="row g-4">
-        <div class="col-12">
-          <div class="card card-eco">
-            <div class="card-header header-agua">
-              <i class="bi bi-pencil-square me-2"></i>Registrar consumo do mês
-            </div>
-            <div class="card-body p-4">
-              <form id="formConsumo" novalidate>
-<div class="row g-3 mb-2">
-                  <div class="col-md-4">
-                    <label for="nomeUsuario" class="form-label">Seu nome (opcional)</label>
-                    <input type="text" class="form-control" id="nomeUsuario" placeholder="Ex: Maria">
-                  </div>
-                  <div class="col-md-4">
-                    <label for="quantidadePessoas" class="form-label">Quantidade de pessoas *</label>
-                    <div class="input-group">
-                      <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
-                      <input type="number" class="form-control" id="quantidadePessoas" min="1" max="20" step="1" value="1" required>
-                    </div>
-                    <div class="invalid-feedback">Informe quantas pessoas moram na residência.</div>
-                  </div>
-                  <div class="col-md-4">
-                    <label for="mesReferencia" class="form-label">Mês de referência *</label>
-                    <input type="month" class="form-control" id="mesReferencia" required>
-                    <div class="invalid-feedback">Informe o mês de referência.</div>
-                  </div>
+        <!-- Formulário -->
+        <section id="tela1" class="screen active">
+          <div class="row g-4">
+            <div class="col-12">
+              <div class="card card-eco">
+                <div class="card-header header-agua">
+                  <i class="bi bi-pencil-square me-2"></i>Registrar consumo do mês
                 </div>
-
-                <fieldset class="tipo-consumo-fieldset mt-4">
-                  <legend class="form-label fw-semibold mb-2">O que você quer analisar? *</legend>
-                  <input type="hidden" id="tipoConsumo" value="energia">
-                  <div class="tipo-consumo-grid">
-                    <label class="tipo-option" for="tipoEnergia">
-                      <input class="tipo-radio" type="radio" name="tipoConsumoOpcao" id="tipoEnergia" value="energia" checked>
-                      <span class="tipo-icon tipo-icon-energia"><i class="bi bi-lightning-charge-fill"></i></span>
-                      <span>
-                        <strong>Energia elétrica</strong>
-                        <small class="text-muted">Consumo mensal em kWh</small>
-                      </span>
-                    </label>
-                    <label class="tipo-option" for="tipoAgua">
-                      <input class="tipo-radio" type="radio" name="tipoConsumoOpcao" id="tipoAgua" value="agua">
-                      <span class="tipo-icon tipo-icon-agua"><i class="bi bi-droplet-fill"></i></span>
-                      <span>
-                        <strong>Água</strong>
-                        <small class="text-muted">Consumo mensal em m³</small>
-                      </span>
-                    </label>
-                  </div>
-                </fieldset>
-
-                <hr class="my-4">
-<div class="row g-3 mb-2">
-                  <div class="col-md-6">
-                    <label for="consumoValor" class="form-label" id="labelConsumo">Consumo em kWh *</label>
-                    <div class="input-group">
-                      <input type="number" class="form-control" id="consumoValor" min="0" step="0.1" placeholder="Ex: 180" required>
-                      <span class="input-group-text" id="unidadeConsumo">kWh</span>
+                <div class="card-body p-4">
+                  <form id="formConsumo" novalidate>
+                    <div class="row g-3 mb-2">
+                      <div class="col-md-4">
+                        <label for="nomeUsuario" class="form-label">Seu nome (opcional)</label>
+                        <input type="text" class="form-control" id="nomeUsuario" placeholder="Ex: Maria">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="quantidadePessoas" class="form-label">Quantidade de pessoas *</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+                          <input type="number" class="form-control" id="quantidadePessoas" min="1" max="20" step="1" value="1" required>
+                        </div>
+                        <div class="invalid-feedback">Informe quantas pessoas moram na residência.</div>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="mesReferencia" class="form-label">Mês de referência *</label>
+                        <input type="month" class="form-control" id="mesReferencia" required>
+                        <div class="invalid-feedback">Informe o mês de referência.</div>
+                      </div>
                     </div>
-                    <div class="invalid-feedback">Informe um valor de consumo válido (maior que zero).</div>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="valorConta" class="form-label">Valor total da conta (R$) *</label>
-                    <div class="input-group">
-                      <span class="input-group-text">R$</span>
-                      <input type="number" class="form-control" id="valorConta" min="0" step="0.01" placeholder="Ex: 210,50" required>
-                    </div>
-                    <div class="invalid-feedback">Informe o valor total pago na conta.</div>
-                  </div>
-                </div>
 
-                <hr class="my-4">
-<h6 class="fw-bold mb-1" id="tituloHabitos"><i class="bi bi-house-gear me-1"></i>Quais eletrodomésticos você usa com frequência?</h6>
-                <p class="text-muted small mb-3" id="descricaoHabitos">Selecione os aparelhos de uso residencial comum ou relevante em Sorocaba. O consumo médio exibido é uma estimativa e pode variar conforme o modelo e o tempo de uso.</p>
-
-                <div class="row g-3" id="listaEletrodomesticos">
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_geladeira" data-nome="Geladeira" data-icon="bi-door-closed-fill">
-                        <label class="form-check-label fw-semibold" for="chk_geladeira">
-                          <i class="bi bi-door-closed-fill appliance-icon text-primary d-block mb-1"></i>
-                          Geladeira
+                    <fieldset class="tipo-consumo-fieldset mt-4">
+                      <legend class="form-label fw-semibold mb-2">O que você quer analisar? *</legend>
+                      <input type="hidden" id="tipoConsumo" value="energia">
+                      <div class="tipo-consumo-grid">
+                        <label class="tipo-option" for="tipoEnergia">
+                          <input class="tipo-radio" type="radio" name="tipoConsumoOpcao" id="tipoEnergia" value="energia" checked>
+                          <span class="tipo-icon tipo-icon-energia"><i class="bi bi-lightning-charge-fill"></i></span>
+                          <span>
+                            <strong>Energia elétrica</strong>
+                            <small class="text-muted">Consumo mensal em kWh</small>
+                          </span>
+                        </label>
+                        <label class="tipo-option" for="tipoAgua">
+                          <input class="tipo-radio" type="radio" name="tipoConsumoOpcao" id="tipoAgua" value="agua">
+                          <span class="tipo-icon tipo-icon-agua"><i class="bi bi-droplet-fill"></i></span>
+                          <span>
+                            <strong>Água</strong>
+                            <small class="text-muted">Consumo mensal em m³</small>
+                          </span>
                         </label>
                       </div>
-                      <div class="small text-muted mb-2">≈ 45 kWh/mês por aparelho</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_geladeira">Quantidade</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_geladeira" min="1" max="5" value="1" disabled>
-                      </div>
-                    </div>
-                  </div>
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_chuveiro" data-nome="Chuveiro elétrico" data-icon="bi-droplet-fill">
-                        <label class="form-check-label fw-semibold" for="chk_chuveiro">
-                          <i class="bi bi-droplet-fill appliance-icon text-primary d-block mb-1"></i>
-                          Chuveiro elétrico
-                        </label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 67 kWh/mês com 14 usos/semana</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_chuveiro">Usos/semana</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_chuveiro" min="1" max="70" value="14" disabled>
-                      </div>
-                    </div>
-                  </div>
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_lavadora" data-nome="Máquina de lavar roupa" data-icon="bi-basket-fill">
-                        <label class="form-check-label fw-semibold" for="chk_lavadora">
-                          <i class="bi bi-basket-fill appliance-icon text-success d-block mb-1"></i>
-                          Máq. de lavar
-                        </label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 10 kWh/mês com 4 ciclos/semana</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_lavadora">Usos/semana</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_lavadora" min="1" max="20" value="4" disabled>
-                      </div>
-                    </div>
-                  </div>
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_tv" data-nome="Televisão" data-icon="bi-tv-fill">
-                        <label class="form-check-label fw-semibold" for="chk_tv"><i class="bi bi-tv-fill appliance-icon text-info d-block mb-1"></i>Televisão</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 9 kWh/mês com 3 h/dia</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_tv">Horas/dia</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_tv" min="1" max="24" value="3" disabled>
-                      </div>
-                    </div>
-                  </div>
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_iluminacao" data-nome="Iluminação" data-icon="bi-lightbulb-fill">
-                        <label class="form-check-label fw-semibold" for="chk_iluminacao"><i class="bi bi-lightbulb-fill appliance-icon text-warning d-block mb-1"></i>Iluminação</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 7 kWh/mês para 5 lâmpadas LED</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_iluminacao">Nº de lâmpadas</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_iluminacao" min="1" max="50" value="5" disabled>
-                      </div>
-                    </div>
-                  </div>
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_microondas" data-nome="Micro-ondas" data-icon="bi-grid-3x3-gap-fill">
-                        <label class="form-check-label fw-semibold" for="chk_microondas"><i class="bi bi-grid-3x3-gap-fill appliance-icon text-secondary d-block mb-1"></i>Micro-ondas</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 4 kWh/mês com 4 usos/semana</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_microondas">Usos/semana</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_microondas" min="1" max="50" value="4" disabled>
-                      </div>
-                    </div>
-                  </div>
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_airfryer" data-nome="Air fryer" data-icon="bi-basket2-fill">
-                        <label class="form-check-label fw-semibold" for="chk_airfryer"><i class="bi bi-basket2-fill appliance-icon text-danger d-block mb-1"></i>Air fryer</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 10 kWh/mês com 4 usos/semana</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_airfryer">Usos/semana</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_airfryer" min="1" max="50" value="4" disabled>
-                      </div>
-                    </div>
-                  </div>
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_ar" data-nome="Ar-condicionado" data-icon="bi-snow">
-                        <label class="form-check-label fw-semibold" for="chk_ar"><i class="bi bi-snow appliance-icon text-info d-block mb-1"></i>Ar-condicionado</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 132 kWh/mês com 4 h/dia</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_ar">Horas/dia</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_ar" min="1" max="24" value="4" disabled>
-                      </div>
-                    </div>
-                  </div>
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_ventilador" data-nome="Ventilador" data-icon="bi-wind">
-                        <label class="form-check-label fw-semibold" for="chk_ventilador"><i class="bi bi-wind appliance-icon text-info d-block mb-1"></i>Ventilador</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 10 kWh/mês com 4 h/dia</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_ventilador">Horas/dia</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_ventilador" min="1" max="24" value="4" disabled>
-                      </div>
-                    </div>
-                  </div>
-<div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_ferro" data-nome="Ferro de passar" data-icon="bi-lightning-charge-fill">
-                        <label class="form-check-label fw-semibold" for="chk_ferro">
-                          <i class="bi bi-lightning-charge-fill appliance-icon text-warning d-block mb-1"></i>
-                          Ferro de passar
-                        </label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 12 kWh/mês com 3 usos/semana</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_ferro">Usos/semana</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_ferro" min="1" max="20" value="3" disabled>
-                      </div>
-                    </div>
-                  </div>
+                    </fieldset>
 
+                    <hr class="my-4">
+
+                    <div class="row g-3 mb-2">
+                      <div class="col-md-6">
+                        <label for="consumoValor" class="form-label" id="labelConsumo">Consumo em kWh *</label>
+                        <div class="input-group">
+                          <input type="number" class="form-control" id="consumoValor" min="0" step="0.1" placeholder="Ex: 180" required>
+                          <span class="input-group-text" id="unidadeConsumo">kWh</span>
+                        </div>
+                        <div class="invalid-feedback">Informe um valor de consumo válido (maior que zero).</div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="valorConta" class="form-label">Valor total da conta (R$) *</label>
+                        <div class="input-group">
+                          <span class="input-group-text">R$</span>
+                          <input type="number" class="form-control" id="valorConta" min="0" step="0.01" placeholder="Ex: 210,50" required>
+                        </div>
+                        <div class="invalid-feedback">Informe o valor total pago na conta.</div>
+                      </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h6 class="fw-bold mb-1" id="tituloHabitos"><i class="bi bi-house-gear me-1"></i>Quais eletrodomésticos você usa com frequência?</h6>
+                    <p class="text-muted small mb-3" id="descricaoHabitos">Selecione os aparelhos de uso residencial comum ou relevante em Sorocaba. O consumo médio exibido é uma estimativa e pode variar conforme o modelo e o tempo de uso.</p>
+
+                    <div class="row g-3" id="listaEletrodomesticos">
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_geladeira" data-nome="Geladeira" data-icon="bi-door-closed-fill">
+                            <label class="form-check-label fw-semibold" for="chk_geladeira">
+                              <i class="bi bi-door-closed-fill appliance-icon text-primary d-block mb-1"></i>
+                              Geladeira
+                            </label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 45 kWh/mês por aparelho</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_geladeira">Quantidade</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_geladeira" min="1" max="5" value="1" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_chuveiro" data-nome="Chuveiro elétrico" data-icon="bi-droplet-fill">
+                            <label class="form-check-label fw-semibold" for="chk_chuveiro">
+                              <i class="bi bi-droplet-fill appliance-icon text-primary d-block mb-1"></i>
+                              Chuveiro elétrico
+                            </label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 67 kWh/mês com 14 usos/semana</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_chuveiro">Usos/semana</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_chuveiro" min="1" max="70" value="14" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_lavadora" data-nome="Máquina de lavar roupa" data-icon="bi-basket-fill">
+                            <label class="form-check-label fw-semibold" for="chk_lavadora">
+                              <i class="bi bi-basket-fill appliance-icon text-success d-block mb-1"></i>
+                              Máq. de lavar
+                            </label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 10 kWh/mês com 16 ciclos/mês</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_lavadora">Usos/mês</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_lavadora" min="1" max="80" value="16" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_tv" data-nome="Televisão" data-icon="bi-tv-fill">
+                            <label class="form-check-label fw-semibold" for="chk_tv"><i class="bi bi-tv-fill appliance-icon text-info d-block mb-1"></i>Televisão</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 9 kWh/mês com 3 h/dia</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_tv">Horas/dia</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_tv" min="1" max="24" value="3" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_iluminacao" data-nome="Iluminação" data-icon="bi-lightbulb-fill">
+                            <label class="form-check-label fw-semibold" for="chk_iluminacao"><i class="bi bi-lightbulb-fill appliance-icon text-warning d-block mb-1"></i>Iluminação</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 7 kWh/mês para 5 lâmpadas LED</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_iluminacao">Nº de lâmpadas</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_iluminacao" min="1" max="50" value="5" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_microondas" data-nome="Micro-ondas" data-icon="bi-grid-3x3-gap-fill">
+                            <label class="form-check-label fw-semibold" for="chk_microondas"><i class="bi bi-grid-3x3-gap-fill appliance-icon text-secondary d-block mb-1"></i>Micro-ondas</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 4 kWh/mês com 4 usos/semana</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_microondas">Usos/semana</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_microondas" min="1" max="50" value="4" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_airfryer" data-nome="Air fryer" data-icon="bi-basket2-fill">
+                            <label class="form-check-label fw-semibold" for="chk_airfryer"><i class="bi bi-basket2-fill appliance-icon text-danger d-block mb-1"></i>Air fryer</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 10 kWh/mês com 4 usos/semana</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_airfryer">Usos/semana</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_airfryer" min="1" max="50" value="4" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_ar" data-nome="Ar-condicionado" data-icon="bi-snow">
+                            <label class="form-check-label fw-semibold" for="chk_ar"><i class="bi bi-snow appliance-icon text-info d-block mb-1"></i>Ar-condicionado</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 132 kWh/mês com 4 h/dia</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_ar">Horas/dia</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_ar" min="1" max="24" value="4" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_ventilador" data-nome="Ventilador" data-icon="bi-wind">
+                            <label class="form-check-label fw-semibold" for="chk_ventilador"><i class="bi bi-wind appliance-icon text-info d-block mb-1"></i>Ventilador</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 10 kWh/mês com 4 h/dia</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_ventilador">Horas/dia</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_ventilador" min="1" max="24" value="4" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_ferro" data-nome="Ferro de passar" data-icon="bi-lightning-charge-fill">
+                            <label class="form-check-label fw-semibold" for="chk_ferro">
+                              <i class="bi bi-lightning-charge-fill appliance-icon text-warning d-block mb-1"></i>
+                              Ferro de passar
+                            </label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 12 kWh/mês com 3 usos/semana</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_ferro">Usos/semana</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_ferro" min="1" max="20" value="3" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row g-3 d-none" id="listaHabitosAgua">
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_banho_agua" data-nome="Chuveiro/banho" data-icon="bi-droplet-fill">
+                            <label class="form-check-label fw-semibold" for="chk_banho_agua"><i class="bi bi-droplet-fill appliance-icon text-primary d-block mb-1"></i>Chuveiro/banho</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 10 litros por minuto</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_banho_agua">Minutos/dia</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_banho_agua" min="1" max="120" value="15" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_lavadora_agua" data-nome="Máquina de lavar roupa" data-icon="bi-basket-fill">
+                            <label class="form-check-label fw-semibold" for="chk_lavadora_agua"><i class="bi bi-basket-fill appliance-icon text-success d-block mb-1"></i>Máq. de lavar</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 135 litros por ciclo</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_lavadora_agua">Usos/mês</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_lavadora_agua" min="1" max="80" value="12" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_torneira" data-nome="Torneira" data-icon="bi-faucet-fill">
+                            <label class="form-check-label fw-semibold" for="chk_torneira"><i class="bi bi-faucet-fill appliance-icon text-info d-block mb-1"></i>Torneira</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 10 litros por minuto</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_torneira">Minutos/dia</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_torneira" min="1" max="120" value="10" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_vaso" data-nome="Vaso sanitário" data-icon="bi-badge-wc-fill">
+                            <label class="form-check-label fw-semibold" for="chk_vaso"><i class="bi bi-badge-wc-fill appliance-icon text-secondary d-block mb-1"></i>Vaso sanitário</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 6 litros por descarga</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_vaso">Descargas/dia</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_vaso" min="1" max="50" value="5" disabled>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6 col-md-3">
+                        <div class="appliance-box">
+                          <div class="form-check d-flex align-items-center gap-2 mb-2">
+                            <input class="form-check-input habito-checkbox" type="checkbox" id="chk_mangueira" data-nome="Mangueira" data-icon="bi-moisture">
+                            <label class="form-check-label fw-semibold" for="chk_mangueira"><i class="bi bi-moisture appliance-icon text-primary d-block mb-1"></i>Mangueira</label>
+                          </div>
+                          <div class="small text-muted mb-2">≈ 12 litros por minuto</div>
+                          <div class="qty-control">
+                            <label class="form-label small mb-1" for="qtd_mangueira">Minutos/semana</label>
+                            <input type="number" class="form-control form-control-sm" id="qtd_mangueira" min="1" max="300" value="15" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="fonte-oficial mt-3">
+                      <i class="bi bi-journal-check me-1"></i>
+                      <strong>Referência da seleção:</strong> os eletrodomésticos usam como base a PPH 2019,
+                      última pesquisa oficial detalhada encontrada sobre posse e hábitos residenciais,
+                      analisada em relatório do Ministério de Minas e Energia publicado em 2024.
+                      A base geral representa o perfil da região Sudeste. Air fryer e ar-condicionado também foram
+                      incluídos pela relevância atual no consumo residencial, sem atribuir a eles um percentual municipal de Sorocaba.
+                      <a href="https://www.gov.br/mme/pt-br/assuntos/ee/publicacoes-e-estudos/RelatorioP4_Final.pdf"
+                         target="_blank" rel="noopener noreferrer">Consultar relatório do MME</a>.
+                    </div>
+
+                    <div id="alertaFormulario" class="alert alert-danger mt-4 d-none" role="alert"></div>
+
+                    <div class="d-grid d-md-flex justify-content-md-center mt-4">
+                      <button type="submit" class="btn btn-eco-primary btn-lg px-4">
+                        <i class="bi bi-graph-up-arrow me-1"></i> Calcular e Analisar
+                      </button>
+                    </div>
+                  </form>
                 </div>
-<div class="row g-3 d-none" id="listaHabitosAgua">
-                  <div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_banho_agua" data-nome="Chuveiro/banho" data-icon="bi-droplet-fill">
-                        <label class="form-check-label fw-semibold" for="chk_banho_agua"><i class="bi bi-droplet-fill appliance-icon text-primary d-block mb-1"></i>Chuveiro/banho</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 10 litros por minuto</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_banho_agua">Minutos/dia</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_banho_agua" min="1" max="120" value="15" disabled>
-                      </div>
-                    </div>
-                  </div>
+              </div>
+            </div>
+          </div>
 
-                  <div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_lavadora_agua" data-nome="Máquina de lavar roupa" data-icon="bi-basket-fill">
-                        <label class="form-check-label fw-semibold" for="chk_lavadora_agua"><i class="bi bi-basket-fill appliance-icon text-success d-block mb-1"></i>Máq. de lavar</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 135 litros por ciclo</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_lavadora_agua">Usos/semana</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_lavadora_agua" min="1" max="20" value="3" disabled>
-                      </div>
-                    </div>
-                  </div>
+          <div class="quick-benefits" aria-label="Benefícios do acompanhamento">
+            <div class="benefit-item">
+              <span class="benefit-icon"><i class="bi bi-bar-chart-fill"></i></span>
+              <span><strong>Visualize seus hábitos</strong><small>Entenda seu consumo de forma clara.</small></span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon"><i class="bi bi-wallet2"></i></span>
+              <span><strong>Economize dinheiro</strong><small>Pequenas mudanças geram resultados.</small></span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon"><i class="bi bi-leaf-fill"></i></span>
+              <span><strong>Preserve recursos</strong><small>Reduza seu impacto no ambiente.</small></span>
+            </div>
+          </div>
+        </section>
 
-                  <div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_torneira" data-nome="Torneira" data-icon="bi-faucet-fill">
-                        <label class="form-check-label fw-semibold" for="chk_torneira"><i class="bi bi-faucet-fill appliance-icon text-info d-block mb-1"></i>Torneira</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 10 litros por minuto</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_torneira">Minutos/dia</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_torneira" min="1" max="120" value="10" disabled>
-                      </div>
-                    </div>
-                  </div>
+        <!-- Histórico -->
+        <section id="telaHistorico" class="screen">
+          <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <div>
+              <h2 class="h4 fw-bold mb-1"><i class="bi bi-clock-history me-2 text-primary"></i>Histórico de consumo</h2>
+              <p class="text-muted mb-0">Seus registros ficam salvos neste navegador.</p>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+              <button type="button" id="btnBaixarRelatorio" class="btn btn-eco-primary">
+                <i class="bi bi-file-earmark-arrow-down me-1"></i> Baixar relatório
+              </button>
+              <button type="button" id="btnHistoricoHome" class="btn btn-outline-eco">
+                <i class="bi bi-house-door me-1"></i> Voltar ao início
+              </button>
+            </div>
+          </div>
 
-                  <div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_vaso" data-nome="Vaso sanitário" data-icon="bi-badge-wc-fill">
-                        <label class="form-check-label fw-semibold" for="chk_vaso"><i class="bi bi-badge-wc-fill appliance-icon text-secondary d-block mb-1"></i>Vaso sanitário</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 6 litros por descarga</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_vaso">Descargas/dia</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_vaso" min="1" max="50" value="5" disabled>
-                      </div>
-                    </div>
-                  </div>
+          <div id="historicoVazio" class="history-empty d-none">
+            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+            <strong>Nenhum consumo registrado ainda.</strong>
+            <p class="mb-0 mt-1">Faça uma análise para ela aparecer aqui.</p>
+          </div>
 
-                  <div class="col-6 col-md-3">
-                    <div class="appliance-box">
-                      <div class="form-check d-flex align-items-center gap-2 mb-2">
-                        <input class="form-check-input habito-checkbox" type="checkbox" id="chk_mangueira" data-nome="Mangueira" data-icon="bi-moisture">
-                        <label class="form-check-label fw-semibold" for="chk_mangueira"><i class="bi bi-moisture appliance-icon text-primary d-block mb-1"></i>Mangueira</label>
-                      </div>
-                      <div class="small text-muted mb-2">≈ 12 litros por minuto</div>
-                      <div class="qty-control">
-                        <label class="form-label small mb-1" for="qtd_mangueira">Minutos/semana</label>
-                        <input type="number" class="form-control form-control-sm" id="qtd_mangueira" min="1" max="300" value="15" disabled>
-                      </div>
-                    </div>
-                  </div>
+          <div id="listaHistorico" class="row g-3"></div>
+        </section>
 
+        <!-- Dicas -->
+        <section id="telaDicas" class="screen">
+          <div class="mb-4">
+            <span class="badge rounded-pill text-bg-success mb-2">Guia prático</span>
+            <h2 class="h4 fw-bold mb-2"><i class="bi bi-leaf-fill me-2 text-success"></i>Dicas para economizar em casa</h2>
+            <p class="text-muted mb-0">Pequenas mudanças na rotina ajudam a reduzir o consumo e o valor das contas.</p>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-12 col-xl-6">
+              <div class="card card-eco h-100">
+                <div class="card-header header-eco">
+                  <i class="bi bi-lightning-charge-fill me-2"></i>Economia de energia
                 </div>
-
-                <div class="fonte-oficial mt-3">
-                  <i class="bi bi-journal-check me-1"></i>
-                  <strong>Referência da seleção:</strong> os eletrodomésticos usam como base a PPH 2019,
-                  última pesquisa oficial detalhada encontrada sobre posse e hábitos residenciais,
-                  analisada em relatório do Ministério de Minas e Energia publicado em 2024.
-                  A base geral representa o perfil da região Sudeste. Air fryer e ar-condicionado também foram
-                  incluídos pela relevância atual no consumo residencial, sem atribuir a eles um percentual municipal de Sorocaba.
-                  <a href="https://www.gov.br/mme/pt-br/assuntos/ee/publicacoes-e-estudos/RelatorioP4_Final.pdf"
-                     target="_blank" rel="noopener noreferrer">Consultar relatório do MME</a>.
+                <div class="card-body p-4">
+                  <div class="dica-item">Reduza alguns minutos do banho elétrico e use a posição verão quando possível.</div>
+                  <div class="dica-item">Use a máquina de lavar com a carga completa e evite vários ciclos pequenos.</div>
+                  <div class="dica-item">Desligue aparelhos da tomada quando não estiverem em uso.</div>
+                  <div class="dica-item">Aproveite a iluminação natural e prefira lâmpadas LED.</div>
+                  <div class="dica-item mb-0">Mantenha o ar-condicionado em temperatura moderada e portas fechadas.</div>
                 </div>
+              </div>
+            </div>
 
-                <div id="alertaFormulario" class="alert alert-danger mt-4 d-none" role="alert"></div>
-
-                <div class="d-grid d-md-flex justify-content-md-center mt-4">
-                  <button type="submit" class="btn btn-eco-primary btn-lg px-4">
-                    <i class="bi bi-graph-up-arrow me-1"></i> Calcular e Analisar
-                  </button>
+            <div class="col-12 col-xl-6">
+              <div class="card card-eco h-100">
+                <div class="card-header header-agua">
+                  <i class="bi bi-droplet-fill me-2"></i>Economia de água
                 </div>
-
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="quick-benefits" aria-label="Benefícios do acompanhamento">
-        <div class="benefit-item">
-          <span class="benefit-icon"><i class="bi bi-bar-chart-fill"></i></span>
-          <span><strong>Visualize seus hábitos</strong><small>Entenda seu consumo de forma clara.</small></span>
-        </div>
-        <div class="benefit-item">
-          <span class="benefit-icon"><i class="bi bi-wallet2"></i></span>
-          <span><strong>Economize dinheiro</strong><small>Pequenas mudanças geram resultados.</small></span>
-        </div>
-        <div class="benefit-item">
-          <span class="benefit-icon"><i class="bi bi-leaf-fill"></i></span>
-          <span><strong>Preserve recursos</strong><small>Reduza seu impacto no ambiente.</small></span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Histórico -->
-    <section id="telaHistorico" class="screen">
-            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-        <div>
-          <h2 class="h4 fw-bold mb-1"><i class="bi bi-clock-history me-2 text-primary"></i>Histórico de consumo</h2>
-          <p class="text-muted mb-0">Seus registros ficam salvos neste navegador.</p>
-        </div>
-        <div class="d-flex gap-2 flex-wrap">
-          <button type="button" id="btnBaixarRelatorio" class="btn btn-eco-primary">
-            <i class="bi bi-file-earmark-arrow-down me-1"></i> Baixar relatório
-          </button>
-          <button type="button" id="btnHistoricoHome" class="btn btn-outline-eco">
-            <i class="bi bi-house-door me-1"></i> Voltar ao início
-          </button>
-        </div>
-      </div>
-
-      <div id="historicoVazio" class="history-empty d-none">
-        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-        <strong>Nenhum consumo registrado ainda.</strong>
-        <p class="mb-0 mt-1">Faça uma análise para ela aparecer aqui.</p>
-      </div>
-
-      <div id="listaHistorico" class="row g-3"></div>
-    </section>
-    
-    <!-- Dicas -->
-    <section id="telaDicas" class="screen">
-      <div class="mb-4">
-        <span class="badge rounded-pill text-bg-success mb-2">Guia prático</span>
-        <h2 class="h4 fw-bold mb-2"><i class="bi bi-leaf-fill me-2 text-success"></i>Dicas para economizar em casa</h2>
-        <p class="text-muted mb-0">Pequenas mudanças na rotina ajudam a reduzir o consumo e o valor das contas.</p>
-      </div>
-
-      <div class="row g-4">
-        <div class="col-12 col-xl-6">
-          <div class="card card-eco h-100">
-            <div class="card-header header-eco">
-              <i class="bi bi-lightning-charge-fill me-2"></i>Economia de energia
-            </div>
-            <div class="card-body p-4">
-              <div class="dica-item">Reduza alguns minutos do banho elétrico e use a posição verão quando possível.</div>
-              <div class="dica-item">Use a máquina de lavar com a carga completa e evite vários ciclos pequenos.</div>
-              <div class="dica-item">Desligue aparelhos da tomada quando não estiverem em uso.</div>
-              <div class="dica-item">Aproveite a iluminação natural e prefira lâmpadas LED.</div>
-              <div class="dica-item mb-0">Mantenha o ar-condicionado em temperatura moderada e portas fechadas.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-xl-6">
-          <div class="card card-eco h-100">
-            <div class="card-header header-agua">
-              <i class="bi bi-droplet-fill me-2"></i>Economia de água
-            </div>
-            <div class="card-body p-4">
-              <div class="dica-item dica-agua">Feche a torneira enquanto escova os dentes ou ensaboa a louça.</div>
-              <div class="dica-item dica-agua">Reduza o tempo de banho e feche o chuveiro ao se ensaboar.</div>
-              <div class="dica-item dica-agua">Verifique vazamentos em torneiras, descargas e registros.</div>
-              <div class="dica-item dica-agua">Reaproveite água da máquina de lavar quando for possível.</div>
-              <div class="dica-item dica-agua mb-0">Prefira balde e vassoura no lugar da mangueira.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Resultado -->
-    <section id="tela2" class="screen">
-
-      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-        <h2 class="h4 fw-bold mb-0" id="tituloResultado">Resultado da sua análise</h2>
-        <button id="btnVoltar" class="btn btn-outline-eco">
-          <i class="bi bi-arrow-counterclockwise me-1"></i> Voltar e Registrar Novo Mês
-        </button>
-      </div>
-<div class="row g-4 mb-4">
-        <div class="col-12">
-          <div id="semaforoBox" class="semaforo-box">
-            <div class="row align-items-center g-3">
-              <div class="col-md-7">
-                <div class="d-flex align-items-center mb-2">
-                  <span id="luzSemaforo" class="semaforo-luz"></span>
-                  <span id="statusSemaforo" class="fw-bold fs-5">--</span>
+                <div class="card-body p-4">
+                  <div class="dica-item dica-agua">Feche a torneira enquanto escova os dentes ou ensaboa a louça.</div>
+                  <div class="dica-item dica-agua">Reduza o tempo de banho e feche o chuveiro ao se ensaboar.</div>
+                  <div class="dica-item dica-agua">Verifique vazamentos em torneiras, descargas e registros.</div>
+                  <div class="dica-item dica-agua">Reaproveite água da máquina de lavar quando for possível.</div>
+                  <div class="dica-item dica-agua mb-0">Prefira balde e vassoura no lugar da mangueira.</div>
                 </div>
-                <p class="mb-0" id="mensagemSemaforo">Comparando seu consumo com a média do município.</p>
-              </div>
-              <div class="col-md-5 text-md-end">
-                <div class="fs-2 fw-bold" id="percentualDiferenca">--%</div>
-                <small class="text-muted" id="legendaPercentual">em relação à média de Sorocaba</small>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-<div class="row g-4 mb-4">
-        <div class="col-md-6">
-          <div class="card card-eco h-100">
-            <div class="card-header header-resultado">
-              <i class="bi bi-person-fill me-2"></i>Seu consumo
-            </div>
-            <div class="card-body">
-              <div class="d-flex justify-content-between mb-2">
-                <span>Consumo registrado</span>
-                <strong id="consumoUsuarioValor">--</strong>
-              </div>
-              <div class="d-flex justify-content-between mb-2">
-                <span>Pessoas na residência</span>
-                <strong id="moradoresUsuarioValor">--</strong>
-              </div>
-              <div class="d-flex justify-content-between mb-2">
-                <span>Consumo por pessoa</span>
-                <strong id="consumoPessoaValor">--</strong>
-              </div>
-              <div class="comparativo-barra mb-2">
-                <div id="barraUsuario" class="h-100 d-flex align-items-center justify-content-center text-white fw-bold" style="width: 0%; background-color: var(--agua-azul);">0%</div>
-              </div>
-              <div class="d-flex justify-content-between">
-                <span>Valor da conta</span>
-                <strong id="contaUsuarioValor">--</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card card-eco h-100">
-            <div class="card-header header-resultado">
-              <i class="bi bi-people-fill me-2"></i>Média em Sorocaba
-            </div>
-            <div class="card-body">
-              <div class="d-flex justify-content-between mb-2">
-                <span>Consumo médio residencial</span>
-                <strong id="consumoMediaValor">--</strong>
-              </div>
-              <div class="comparativo-barra mb-2">
-                <div id="barraMedia" class="h-100 d-flex align-items-center justify-content-center text-white fw-bold" style="width: 100%; background-color: var(--eco-verde);">Referência</div>
-              </div>
-              <div class="d-flex justify-content-between">
-                <span>Fonte</span>
-                <strong id="fonteMedia">Dados oficiais de 2024</strong>
-              </div>
-              <div class="fonte-oficial" id="detalheFonteMedia">A fonte usada será exibida conforme o tipo de consumo.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-<div class="row g-4 mb-4">
-        <div class="col-12">
-          <div class="card card-eco">
-            <div class="card-header header-resultado">
-              <i class="bi bi-cash-coin me-2"></i>Impacto no bolso — economia potencial
-            </div>
-            <div class="card-body">
-              <p class="text-muted small mb-3" id="descricaoEconomia">Estimativas com base nos equipamentos ou hábitos que você marcou na Tela 1. Pequenos ajustes de rotina, grande economia no fim do mês.</p>
-              <div id="listaEconomia">
-</div>
-              <div id="semEletrodomesticos" class="alert alert-info d-none mb-0">
-                Você não marcou nenhuma opção específica. Volte à Tela 1 e selecione seus equipamentos ou hábitos para receber dicas personalizadas.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-<div class="row g-4 mb-4">
-        <div class="col-12">
-          <div class="card card-eco">
-            <div class="card-header header-resultado">
-              <i class="bi bi-lightbulb-fill me-2"></i>Dicas práticas para o seu perfil
-            </div>
-            <div class="card-body" id="listaDicas">
-</div>
-          </div>
-        </div>
-      </div>
+        </section>
 
-      <p class="text-muted small" id="notaFonte">
-        *As médias de Sorocaba usam dados oficiais com ano-base 2024. A seleção dos equipamentos usa a PPH 2019,
-        última pesquisa oficial detalhada encontrada, analisada pelo MME em relatório publicado em 2024;
-        ela representa o perfil da região Sudeste. Air fryer e ar-condicionado foram incluídos pela relevância atual
-        no consumo residencial, sem percentual municipal. As estimativas de economia em reais
-        continuam sendo educativas e podem variar conforme a tarifa da conta.
-      </p>
+        <!-- Resultado -->
+        <section id="tela2" class="screen">
+          <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <h2 class="h4 fw-bold mb-0" id="tituloResultado">Resultado da sua análise</h2>
+            <button id="btnVoltar" class="btn btn-outline-eco">
+              <i class="bi bi-arrow-counterclockwise me-1"></i> Voltar e Registrar Novo Mês
+            </button>
+          </div>
+          <div class="row g-4 mb-4">
+            <div class="col-12">
+              <div id="semaforoBox" class="semaforo-box">
+                <div class="row align-items-center g-3">
+                  <div class="col-md-7">
+                    <div class="d-flex align-items-center mb-2">
+                      <span id="luzSemaforo" class="semaforo-luz"></span>
+                      <span id="statusSemaforo" class="fw-bold fs-5">--</span>
+                    </div>
+                    <p class="mb-0" id="mensagemSemaforo">Comparando seu consumo com a média do município.</p>
+                  </div>
+                  <div class="col-md-5 text-md-end">
+                    <div class="fs-2 fw-bold" id="percentualDiferenca">--%</div>
+                    <small class="text-muted" id="legendaPercentual">em relação à média de Sorocaba</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-4 mb-4">
+            <div class="col-md-6">
+              <div class="card card-eco h-100">
+                <div class="card-header header-resultado">
+                  <i class="bi bi-person-fill me-2"></i>Seu consumo
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Consumo registrado</span>
+                    <strong id="consumoUsuarioValor">--</strong>
+                  </div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Pessoas na residência</span>
+                    <strong id="moradoresUsuarioValor">--</strong>
+                  </div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Consumo por pessoa</span>
+                    <strong id="consumoPessoaValor">--</strong>
+                  </div>
+                  <div class="comparativo-barra mb-2">
+                    <div id="barraUsuario" class="h-100 d-flex align-items-center justify-content-center text-white fw-bold" style="width: 0%; background-color: var(--agua-azul);">0%</div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span>Valor da conta</span>
+                    <strong id="contaUsuarioValor">--</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card card-eco h-100">
+                <div class="card-header header-resultado">
+                  <i class="bi bi-people-fill me-2"></i>Média em Sorocaba
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Consumo médio residencial</span>
+                    <strong id="consumoMediaValor">--</strong>
+                  </div>
+                  <div class="comparativo-barra mb-2">
+                    <div id="barraMedia" class="h-100 d-flex align-items-center justify-content-center text-white fw-bold" style="width: 100%; background-color: var(--eco-verde);">Referência</div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span>Fonte</span>
+                    <strong id="fonteMedia">Dados oficiais de 2024</strong>
+                  </div>
+                  <div class="fonte-oficial" id="detalheFonteMedia">A fonte usada será exibida conforme o tipo de consumo.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-4 mb-4">
+            <div class="col-12">
+              <div class="card card-eco">
+                <div class="card-header header-resultado">
+                  <i class="bi bi-cash-coin me-2"></i>Impacto no bolso — economia potencial
+                </div>
+                <div class="card-body">
+                  <p class="text-muted small mb-3" id="descricaoEconomia">Estimativas com base nos equipamentos ou hábitos que você marcou na Tela 1. Pequenos ajustes de rotina, grande economia no fim do mês.</p>
+                  <div id="listaEconomia"></div>
+                  <div id="semEletrodomesticos" class="alert alert-info d-none mb-0">
+                    Você não marcou nenhuma opção específica. Volte à Tela 1 e selecione seus equipamentos ou hábitos para receber dicas personalizadas.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-4 mb-4">
+            <div class="col-12">
+              <div class="card card-eco">
+                <div class="card-header header-resultado">
+                  <i class="bi bi-lightbulb-fill me-2"></i>Dicas práticas para o seu perfil
+                </div>
+                <div class="card-body" id="listaDicas"></div>
+              </div>
+            </div>
+          </div>
 
-    </section>
+          <p class="text-muted small" id="notaFonte">
+            *As médias de Sorocaba usam dados oficiais com ano-base 2024. A seleção dos equipamentos usa a PPH 2019,
+            última pesquisa oficial detalhada encontrada, analisada pelo MME em relatório publicado em 2024;
+            ela representa o perfil da região Sudeste. Air fryer e ar-condicionado foram incluídos pela relevância atual
+            no consumo residencial, sem percentual municipal. As estimativas de economia em reais
+            continuam sendo educativas e podem variar conforme a tarifa da conta.
+          </p>
+        </section>
+
         <!-- Sobre -->
-    <section id="telaSobre" class="screen">
-      <div class="mb-4">
-        <span class="badge rounded-pill text-bg-success mb-2">Sobre o projeto</span>
-        <h2 class="h4 fw-bold mb-2"><i class="bi bi-info-circle me-2 text-primary"></i>EcoBrasil</h2>
-        <p class="text-muted mb-0">Monitoramento consciente de água e energia em Sorocaba - SP.</p>
-      </div>
-
-      <div class="row g-4">
-        <!-- O que é -->
-        <div class="col-12 col-xl-6">
-          <div class="card card-eco h-100">
-            <div class="card-header header-eco">
-              <i class="bi bi-lightbulb me-2"></i>O que é o EcoBrasil
-            </div>
-            <div class="card-body p-4">
-              <p class="mb-3">
-                O <strong>EcoBrasil</strong> é um projeto <strong>acadêmico</strong> desenvolvido como
-                trabalho da disciplina de UPX. Ele tem como objetivo ajudar
-                moradores de <strong>Sorocaba - SP</strong> a entender e comparar seu consumo
-                residencial de <strong>água</strong> e <strong>energia elétrica</strong> com as
-                médias oficiais do município.
-              </p>
-              <p class="mb-0 text-muted small">
-                Tudo é feito direto no navegador: nenhum dado pessoal é enviado para servidores.
-                Os registros ficam salvos apenas no <code>localStorage</code> do seu dispositivo.
-              </p>
-            </div>
+        <section id="telaSobre" class="screen">
+          <div class="mb-4">
+            <span class="badge rounded-pill text-bg-success mb-2">Sobre o projeto</span>
+            <h2 class="h4 fw-bold mb-2"><i class="bi bi-info-circle me-2 text-primary"></i>EcoBrasil</h2>
+            <p class="text-muted mb-0">Monitoramento consciente de água e energia em Sorocaba - SP.</p>
           </div>
-        </div>
 
-        <!-- Objetivo -->
-        <div class="col-12 col-xl-6">
-          <div class="card card-eco h-100">
-            <div class="card-header header-eco">
-              <i class="bi bi-bullseye me-2"></i>Nosso objetivo
+          <div class="row g-4">
+            <!-- O que é -->
+            <div class="col-12 col-xl-6">
+              <div class="card card-eco h-100">
+                <div class="card-header header-eco">
+                  <i class="bi bi-lightbulb me-2"></i>O que é o EcoBrasil
+                </div>
+                <div class="card-body p-4">
+                  <p class="mb-3">
+                    O <strong>EcoBrasil</strong> é um projeto <strong>acadêmico</strong> desenvolvido como
+                    trabalho da disciplina de UPX. Ele tem como objetivo ajudar
+                    moradores de <strong>Sorocaba - SP</strong> a entender e comparar seu consumo
+                    residencial de <strong>água</strong> e <strong>energia elétrica</strong> com as
+                    médias oficiais do município.
+                  </p>
+                  <p class="mb-0 text-muted small">
+                    Tudo é feito direto no navegador: nenhum dado pessoal é enviado para servidores.
+                    Os registros ficam salvos apenas no <code>localStorage</code> do seu dispositivo.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="card-body p-4">
-              <ul class="mb-0 ps-3">
-                <li class="mb-2">Promover <strong>educação ambiental</strong> a partir de dados reais.</li>
-                <li class="mb-2">Mostrar como pequenas mudanças de hábito geram <strong>economia financeira</strong>.</li>
-                <li class="mb-2">Facilitar o acesso a <strong>dados oficiais</strong> de consumo médio.</li>
-                <li class="mb-0">Incentivar o <strong>uso consciente</strong> de recursos naturais.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
-        <!-- Quem somos -->
-        <div class="col-12">
-          <div class="card card-eco">
-            <div class="card-header header-eco">
-              <i class="bi bi-people-fill me-2"></i>Quem somos
+            <!-- Objetivo -->
+            <div class="col-12 col-xl-6">
+              <div class="card card-eco h-100">
+                <div class="card-header header-eco">
+                  <i class="bi bi-bullseye me-2"></i>Nosso objetivo
+                </div>
+                <div class="card-body p-4">
+                  <ul class="mb-0 ps-3">
+                    <li class="mb-2">Promover <strong>educação ambiental</strong> a partir de dados reais.</li>
+                    <li class="mb-2">Mostrar como pequenas mudanças de hábito geram <strong>economia financeira</strong>.</li>
+                    <li class="mb-2">Facilitar o acesso a <strong>dados oficiais</strong> de consumo médio.</li>
+                    <li class="mb-0">Incentivar o <strong>uso consciente</strong> de recursos naturais.</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="card-body p-4">
-              <p class="mb-3">
-                Somos estudantes do curso de <strong>Engenharia De Computação</strong>.
-                Este projeto faz parte das nossas atividades acadêmicas e foi desenvolvido com
-                foco em <strong>acessibilidade</strong>, <strong>transparência de dados</strong> e
-                <strong>conscientização ambiental</strong>.
-              </p>
+
+            <!-- Quem somos -->
+            <div class="col-12">
+              <div class="card card-eco">
+                <div class="card-header header-eco">
+                  <i class="bi bi-people-fill me-2"></i>Quem somos
+                </div>
+                <div class="card-body p-4">
+                  <p class="mb-3">
+                    Somos estudantes do curso de <strong>Engenharia De Computação</strong>.
+                    Este projeto faz parte das nossas atividades acadêmicas e foi desenvolvido com
+                    foco em <strong>acessibilidade</strong>, <strong>transparência de dados</strong> e
+                    <strong>conscientização ambiental</strong>.
+                  </p>
                   <div class="row g-3">
                     <div class="col-6 col-md-4 col-lg-3">
                       <div class="integrante-card">
@@ -654,173 +660,178 @@
                       </div>
                     </div>
 
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="integrante-card">
-              <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
-              <strong>Miguel Augusto N.Nogueira</strong>
-              <small class="d-block text-muted">Front-end</small>
-            </div>
-          </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <div class="integrante-card">
+                        <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
+                        <strong>Miguel Augusto N. Nogueira</strong>
+                        <small class="d-block text-muted">Front-end</small>
+                      </div>
+                    </div>
 
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="integrante-card">
-              <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
-              <strong>Caio Eduardo Pires</strong>
-              <small class="d-block text-muted">Relatório</small>
-            </div>
-          </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <div class="integrante-card">
+                        <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
+                        <strong>Caio Eduardo Pires</strong>
+                        <small class="d-block text-muted">Relatório</small>
+                      </div>
+                    </div>
 
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="integrante-card">
-              <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
-              <strong>Millena Monteiro Pinto</strong>
-              <small class="d-block text-muted">Relatório</small>
-            </div>
-          </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <div class="integrante-card">
+                        <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
+                        <strong>Millena Monteiro Pinto</strong>
+                        <small class="d-block text-muted">Relatório</small>
+                      </div>
+                    </div>
 
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="integrante-card">
-              <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
-              <strong>Pablo Gustavo Vilela</strong>
-              <small class="d-block text-muted">Relatório</small>
-            </div>
-          </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <div class="integrante-card">
+                        <div class="integrante-avatar"><i class="bi bi-person-fill"></i></div>
+                        <strong>Pablo Gustavo Vilela</strong>
+                        <small class="d-block text-muted">Relatório</small>
+                      </div>
+                    </div>
 
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="integrante-card">
-              <div class="integrante-avatar"><i class="bi bi-mortarboard-fill"></i></div>
-              <strong>Profa. Dra. Rosana Fernandes Antonio</strong>
-              <small class="d-block text-muted">Orientadora</small>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="integrante-card">
-              <div class="integrante-avatar"><i class="bi bi-mortarboard-fill"></i></div>
-              <strong>Prof. Rodrigo Henrique Geraldo. </strong>
-              <small class="d-block text-muted">Orientador</small>
-            </div>
-        </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <div class="integrante-card">
+                        <div class="integrante-avatar"><i class="bi bi-mortarboard-fill"></i></div>
+                        <strong>Profa. Dra. Rosana Fernandes Antonio</strong>
+                        <small class="d-block text-muted">Orientadora</small>
+                      </div>
+                    </div>
 
-        <!-- Fontes de dados -->
-        <div class="col-12">
-          <div class="card card-eco">
-            <div class="card-header header-eco">
-              <i class="bi bi-journal-text me-2"></i>Fontes oficiais utilizadas
-            </div>
-            <div class="card-body p-4">
-              <p class="text-muted small mb-3">
-                Todos os dados usados para cálculo de médias e comparações vêm de fontes
-                públicas oficiais. Abaixo, cada uma com sua finalidade.
-              </p>
-
-              <div class="fonte-card">
-                <div class="d-flex align-items-start gap-3">
-                  <span class="fonte-icon energia"><i class="bi bi-lightning-charge-fill"></i></span>
-                  <div>
-                    <strong>Anuário de Energéticos por Município do Estado de São Paulo 2025</strong>
-                    <small class="d-block text-muted mb-2">
-                      Ano-base 2024 — página 39 · Secretaria de Energia e Mineração do Estado de SP
-                    </small>
-                    <p class="small mb-2">
-                      Utilizado para calcular a <strong>média mensal de consumo residencial de energia</strong> em Sorocaba:
-                      <code>825.847.560 kWh ÷ 326.343 consumidores ÷ 12 meses = 210,88 kWh</code>.
-                    </p>
-                    <a href="https://dadosenergeticos.energia.sp.gov.br/" target="_blank" rel="noopener noreferrer" class="small">
-                      Consultar fonte oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="fonte-card">
-                <div class="d-flex align-items-start gap-3">
-                  <span class="fonte-icon agua"><i class="bi bi-droplet-fill"></i></span>
-                  <div>
-                    <strong>SINISA — Sistema Nacional de Informações sobre Saneamento</strong>
-                    <small class="d-block text-muted mb-2">
-                      Indicadores de Água · Base Municipal 2024 (retificação) · Município de Sorocaba
-                    </small>
-                    <p class="small mb-2">
-                      Utilizado para o <strong>consumo médio mensal de água por economia</strong>
-                      (indicador IAG2009): <code>13,18 m³/economia/mês</code>.
-                    </p>
-                    <a href="https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/saneamento/sinisa" target="_blank" rel="noopener noreferrer" class="small">
-                      Consultar fonte oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="fonte-card">
-                <div class="d-flex align-items-start gap-3">
-                  <span class="fonte-icon mme"><i class="bi bi-file-earmark-text-fill"></i></span>
-                  <div>
-                    <strong>PPH 2019 — Pesquisa de Posse de Equipamentos e Hábitos de Uso</strong>
-                    <small class="d-block text-muted mb-2">
-                      Relatório MME publicado em 2024 · Região Sudeste
-                    </small>
-                    <p class="small mb-2">
-                      Utilizada como <strong>base metodológica</strong> para a seleção de eletrodomésticos
-                      e hábitos residenciais apresentados no formulário. A pesquisa representa o
-                      perfil médio da região Sudeste.
-                    </p>
-                    <a href="https://www.gov.br/mme/pt-br/assuntos/ee/publicacoes-e-estudos/RelatorioP4_Final.pdf" target="_blank" rel="noopener noreferrer" class="small">
-                      Consultar relatório (PDF) <i class="bi bi-box-arrow-up-right ms-1"></i>
-                    </a>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <div class="integrante-card">
+                        <div class="integrante-avatar"><i class="bi bi-mortarboard-fill"></i></div>
+                        <strong>Prof. Rodrigo Henrique Geraldo</strong>
+                        <small class="d-block text-muted">Orientador</small>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Tecnologias -->
-        <div class="col-12 col-xl-6">
-          <div class="card card-eco h-100">
-            <div class="card-header header-eco">
-              <i class="bi bi-code-slash me-2"></i>Tecnologias utilizadas
+            <!-- Fontes de dados -->
+            <div class="col-12">
+              <div class="card card-eco">
+                <div class="card-header header-eco">
+                  <i class="bi bi-journal-text me-2"></i>Fontes oficiais utilizadas
+                </div>
+                <div class="card-body p-4">
+                  <p class="text-muted small mb-3">
+                    Todos os dados usados para cálculo de médias e comparações vêm de fontes
+                    públicas oficiais. Abaixo, cada uma com sua finalidade.
+                  </p>
+
+                  <div class="fonte-card">
+                    <div class="d-flex align-items-start gap-3">
+                      <span class="fonte-icon energia"><i class="bi bi-lightning-charge-fill"></i></span>
+                      <div>
+                        <strong>Anuário de Energéticos por Município do Estado de São Paulo 2025</strong>
+                        <small class="d-block text-muted mb-2">
+                          Ano-base 2024 — página 39 · Secretaria de Energia e Mineração do Estado de SP
+                        </small>
+                        <p class="small mb-2">
+                          Utilizado para calcular a <strong>média mensal de consumo residencial de energia</strong> em Sorocaba:
+                          <code>825.847.560 kWh ÷ 326.343 consumidores ÷ 12 meses = 210,88 kWh</code>.
+                        </p>
+                        <a href="https://dadosenergeticos.energia.sp.gov.br/" target="_blank" rel="noopener noreferrer" class="small">
+                          Consultar fonte oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="fonte-card">
+                    <div class="d-flex align-items-start gap-3">
+                      <span class="fonte-icon agua"><i class="bi bi-droplet-fill"></i></span>
+                      <div>
+                        <strong>SINISA — Sistema Nacional de Informações sobre Saneamento</strong>
+                        <small class="d-block text-muted mb-2">
+                          Indicadores de Água · Base Municipal 2024 (retificação) · Município de Sorocaba
+                        </small>
+                        <p class="small mb-2">
+                          Utilizado para o <strong>consumo médio mensal de água por economia</strong>
+                          (indicador IAG2009): <code>13,18 m³/economia/mês</code>.
+                        </p>
+                        <a href="https://www.gov.br/cidades/pt-br/acesso-a-informacao/acoes-e-programas/saneamento/sinisa" target="_blank" rel="noopener noreferrer" class="small">
+                          Consultar fonte oficial <i class="bi bi-box-arrow-up-right ms-1"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="fonte-card">
+                    <div class="d-flex align-items-start gap-3">
+                      <span class="fonte-icon mme"><i class="bi bi-file-earmark-text-fill"></i></span>
+                      <div>
+                        <strong>PPH 2019 — Pesquisa de Posse de Equipamentos e Hábitos de Uso</strong>
+                        <small class="d-block text-muted mb-2">
+                          Relatório MME publicado em 2024 · Região Sudeste
+                        </small>
+                        <p class="small mb-2">
+                          Utilizada como <strong>base metodológica</strong> para a seleção de eletrodomésticos
+                          e hábitos residenciais apresentados no formulário. A pesquisa representa o
+                          perfil médio da região Sudeste.
+                        </p>
+                        <a href="https://www.gov.br/mme/pt-br/assuntos/ee/publicacoes-e-estudos/RelatorioP4_Final.pdf" target="_blank" rel="noopener noreferrer" class="small">
+                          Consultar relatório (PDF) <i class="bi bi-box-arrow-up-right ms-1"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="card-body p-4">
-              <div class="tech-badges">
-                <span class="tech-badge html5"><i class="bi bi-filetype-html me-1"></i>HTML5</span>
-                <span class="tech-badge css3"><i class="bi bi-filetype-css me-1"></i>CSS3</span>
-                <span class="tech-badge js"><i class="bi bi-filetype-js me-1"></i>JavaScript</span>
-                
+
+            <!-- Tecnologias -->
+            <div class="col-12 col-xl-6">
+              <div class="card card-eco h-100">
+                <div class="card-header header-eco">
+                  <i class="bi bi-code-slash me-2"></i>Tecnologias utilizadas
+                </div>
+                <div class="card-body p-4">
+                  <div class="tech-badges">
+                    <span class="tech-badge html5"><i class="bi bi-filetype-html me-1"></i>HTML5</span>
+                    <span class="tech-badge css3"><i class="bi bi-filetype-css me-1"></i>CSS3</span>
+                    <span class="tech-badge js"><i class="bi bi-filetype-js me-1"></i>JavaScript</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Aviso -->
+            <div class="col-12 col-xl-6">
+              <div class="card card-eco h-100">
+                <div class="card-header header-eco">
+                  <i class="bi bi-exclamation-triangle-fill me-2"></i>Aviso importante
+                </div>
+                <div class="card-body p-4">
+                  <p class="small mb-2">
+                    Este é um projeto <strong>acadêmico e educativo</strong>. As estimativas de economia
+                    em reais são baseadas em tarifas médias e podem variar conforme a distribuidora,
+                    a bandeira tarifária do mês e o perfil de consumo de cada residência.
+                  </p>
+                  <p class="small mb-0">
+                    As médias de Sorocaba são baseadas em dados oficiais de 2024.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <!-- Sobre -->
-        <div class="col-12 col-xl-6">
-          <div class="card card-eco h-100">
-            <div class="card-header header-eco">
-              <i class="bi bi-exclamation-triangle-fill me-2"></i>Aviso importante
-            </div>
-            <div class="card-body p-4">
-              <p class="small mb-2">
-                Este é um projeto <strong>acadêmico e educativo</strong>. As estimativas de economia
-                em reais são baseadas em tarifas médias e podem variar conforme a distribuidora,
-                a bandeira tarifária do mês e o perfil de consumo de cada residência.
-              </p>
-              <p class="small mb-0">
-                As médias de Sorocaba são baseadas em dados oficiais de 2024.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+      </main>
 
-  <footer class="text-center py-3" id="rodape">
-    <div class="container">
-      EcoBrasil &mdash; Monitoramento consciente de água e energia &copy; 2026
-    </div>
-  </footer>
+      <footer class="text-center py-3" id="rodape">
+        <div class="container">
+          EcoBrasil &mdash; Monitoramento consciente de água e energia &copy; <span id="anoAtual">2026</span>
+        </div>
+      </footer>
     </div>
   </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js?v=14"></script>
 </body>
 </html>

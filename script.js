@@ -55,9 +55,9 @@ const PERFIL_ELETRODOMESTICOS = {
   'Máquina de lavar roupa': {
     icone: 'bi-basket-fill',
     energiaKwhPorUso: 0.6,
-    consumoMedio: 'aprox. 10 kWh/mês com 4 ciclos por semana',
+    consumoMedio: 'aprox. 10 kWh/mês com 16 ciclos/mês',
     dica: 'Acumular roupas para lavar cargas completas em vez de várias cargas pequenas',
-    economiaFormula: (qtd) => qtd * 4 * 0.6 * TARIFA_ESTIMADA.energia * 0.35
+    economiaFormula: (qtdMes) => qtdMes * 0.6 * TARIFA_ESTIMADA.energia * 0.35
   },
   'Micro-ondas': {
     icone: 'bi-grid-3x3-gap-fill',
@@ -104,7 +104,7 @@ const PERFIL_HABITOS_AGUA = {
     icone: 'bi-basket-fill',
     consumoMedio: 'aprox. 135 litros por ciclo',
     dica: 'Juntar roupas e utilizar a máquina apenas com carga completa',
-    economiaFormula: (usosSemana) => usosSemana * 4 * 0.135 * TARIFA_ESTIMADA.agua * 0.25
+    economiaFormula: (usosMes) => usosMes * 0.135 * TARIFA_ESTIMADA.agua * 0.25
   },
   'Torneira': {
     icone: 'bi-faucet-fill',
@@ -144,7 +144,7 @@ function mostrarTela(idTela) {
     document.getElementById('navHistorico')?.classList.add('active');
   }
 
-    if (idTela === 'telaDicas') {
+  if (idTela === 'telaDicas') {
     document.getElementById('navDicas')?.classList.add('active');
   }
 
@@ -369,6 +369,7 @@ tipoConsumoRadios.forEach(radio => {
     if (radio.checked) {
       atualizarTipoConsumo(radio.value);
       document.getElementById('consumoValor').value = '';
+      document.getElementById('valorConta').value = '';
     }
   });
 });
@@ -910,6 +911,13 @@ document.getElementById('btnVoltar')?.addEventListener('click', () => {
 
 function abrirInicio(evento) {
   evento?.preventDefault();
+
+  // Se há um registro carregado, limpa antes de voltar ao início
+  if (recuperarRegistro()) {
+    limparRegistro();
+    resetarFormulario();
+  }
+
   mostrarTela('tela1');
 }
 
@@ -950,6 +958,10 @@ document.getElementById('navSobre')?.addEventListener('click', evento => {
 document.addEventListener('DOMContentLoaded', () => {
   atualizarTipoConsumo('energia');
 
+  // Ano dinâmico no rodapé
+  const anoEl = document.getElementById('anoAtual');
+  if (anoEl) anoEl.textContent = new Date().getFullYear();
+
   const registroExistente = recuperarRegistro();
 
   if (registroExistente) {
@@ -960,7 +972,8 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarTela('tela1');
   }
 });
-/* RELATÓRIO DE HISTÓRICO */
+
+/*  RELATÓRIO DE HISTÓRICO*/
 
 // Organiza os registros por data (mais recente primeiro)
 function ordenarPorData(registros) {
@@ -991,9 +1004,31 @@ function formatarDataHoraRelatorio(data = new Date()) {
   }).format(data);
 }
 
+// Compara o consumo do registro com a média de Sorocaba
+function calcularStatusRelatorio(registro) {
+  const tipo = registro.tipoConsumo === 'agua' ? 'agua' : 'energia';
+  const referencia = REFERENCIAS_SOROCABA[tipo];
+  const media = referencia.mediaMensal;
+  const consumo = Number(registro.consumoValor) || 0;
+
+  if (consumo === 0) {
+    return { status: 'sem-dados', percentual: 0, cor: '#8894a8', icone: '—' };
+  }
+
+  const percentual = ((consumo - media) / media) * 100;
+
+  if (percentual <= 0) {
+    return { status: 'abaixo', percentual, cor: '#18a957', icone: '✓' };
+  }
+  if (percentual <= 10) {
+    return { status: 'próximo', percentual, cor: '#1677e8', icone: '!' };
+  }
+  return { status: 'acima', percentual, cor: '#d94a2b', icone: '↑' };
+}
+
 function montarLinhasTabela(registros, tipo) {
   if (!registros.length) {
-    return `<tr><td colspan="6" class="sem-registros">
+    return `<tr><td colspan="7" class="sem-registros">
       Nenhum registro de ${tipo === 'agua' ? 'água' : 'energia'} encontrado.
     </td></tr>`;
   }
@@ -1007,6 +1042,12 @@ function montarLinhasTabela(registros, tipo) {
     const conta = Number(r.valorConta) || 0;
     const porPessoa = consumo / Math.max(pessoas, 1);
 
+    const comp = calcularStatusRelatorio(r);
+    const sinal = comp.percentual > 0 ? '+' : '';
+    const textoComp = comp.status === 'sem-dados'
+      ? '—'
+      : `${sinal}${comp.percentual.toFixed(1)}%`;
+
     return `
       <tr>
         <td class="mes">${escaparHTML(mes)}</td>
@@ -1015,6 +1056,11 @@ function montarLinhasTabela(registros, tipo) {
         <td class="num"><strong>${consumo.toFixed(1)} ${unidade}</strong></td>
         <td class="num">${porPessoa.toFixed(1)} ${unidade}</td>
         <td class="num">${formatarMoeda(conta)}</td>
+        <td class="num">
+          <span class="badge-comp" style="background:${comp.cor}1a;color:${comp.cor};border-color:${comp.cor}55;">
+            ${textoComp}
+          </span>
+        </td>
       </tr>`;
   }).join('');
 }
@@ -1078,6 +1124,15 @@ function gerarHTMLRelatorio() {
     td.num { text-align: right; white-space: nowrap; }
     td.mes { text-transform: capitalize; white-space: nowrap; }
     td.sem-registros { text-align: center; color: #8894a8; padding: 22px 0; font-style: italic; }
+    .badge-comp {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid;
+      white-space: nowrap;
+    }
     footer { text-align: center; font-size: 12px; color: #63718b; margin-top: 12px; padding-top: 14px; border-top: 1px solid #dce8f3; }
     @media print { body { background: #fff; padding: 0; } header, section.secao, .card-resumo { box-shadow: none; } }
   `;
@@ -1086,6 +1141,7 @@ function gerarHTMLRelatorio() {
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Relatório EcoBrasil — Histórico de Consumo</title>
 <style>${css}</style>
 </head>
@@ -1109,6 +1165,7 @@ function gerarHTMLRelatorio() {
           <th style="text-align:right;">Consumo</th>
           <th style="text-align:right;">Por pessoa</th>
           <th style="text-align:right;">Conta</th>
+          <th style="text-align:right;">vs Média</th>
         </tr></thead>
         <tbody>${linhasEnergia}</tbody>
       </table>
@@ -1123,6 +1180,7 @@ function gerarHTMLRelatorio() {
           <th style="text-align:right;">Consumo</th>
           <th style="text-align:right;">Por pessoa</th>
           <th style="text-align:right;">Conta</th>
+          <th style="text-align:right;">vs Média</th>
         </tr></thead>
         <tbody>${linhasAgua}</tbody>
       </table>
