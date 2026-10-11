@@ -1410,3 +1410,78 @@ function baixarRelatorio() {
 }
 
 document.getElementById('btnBaixarRelatorio')?.addEventListener('click', baixarRelatorio);
+
+/* LIMPAR HISTÓRICO*/
+
+let intervaloContagemLimpeza = null;
+let modalLimparHistorico = null;
+
+function abrirModalLimpar() {
+  const btnConfirmar = document.getElementById('btnConfirmarLimpeza');
+  const contadorEl = document.getElementById('contagemExclusao');
+  const avisoEl = document.getElementById('avisoContagem');
+
+  if (!btnConfirmar || !contadorEl || !modalLimparHistorico) return;
+
+  // Bloqueia botão e reseta visual
+  btnConfirmar.disabled = true;
+  btnConfirmar.innerHTML = '<i class="bi bi-trash3 me-1"></i> Apagar tudo';
+  avisoEl?.classList.remove('d-none');
+
+  let segundos = 3;
+  contadorEl.textContent = segundos;
+
+  // Limpa qualquer intervalo anterior
+  if (intervaloContagemLimpeza) {
+    clearInterval(intervaloContagemLimpeza);
+    intervaloContagemLimpeza = null;
+  }
+
+  // Countdown de 3 → 2 → 1 → 0
+  intervaloContagemLimpeza = setInterval(() => {
+    segundos--;
+    contadorEl.textContent = segundos;
+
+    if (segundos <= 0) {
+      clearInterval(intervaloContagemLimpeza);
+      intervaloContagemLimpeza = null;
+      btnConfirmar.disabled = false;
+      avisoEl?.classList.add('d-none');
+    }
+  }, 1000);
+
+  modalLimparHistorico.show();
+}
+
+function limparHistorico() {
+  try {
+    localStorage.removeItem(HISTORY_KEY);
+    localStorage.removeItem(STORAGE_KEY);
+    modalLimparHistorico?.hide();
+    renderizarHistorico();
+  } catch (erro) {
+    console.error('Erro ao limpar histórico:', erro);
+    alert('Não foi possível limpar o histórico. Verifique se o LocalStorage está habilitado.');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const modalEl = document.getElementById('modalLimparHistorico');
+
+  if (modalEl && window.bootstrap) {
+    modalLimparHistorico = new bootstrap.Modal(modalEl);
+
+    modalEl.addEventListener('hidden.bs.modal', () => {
+      if (intervaloContagemLimpeza) {
+        clearInterval(intervaloContagemLimpeza);
+        intervaloContagemLimpeza = null;
+      }
+    });
+  }
+
+  document.getElementById('btnLimparHistorico')
+    ?.addEventListener('click', abrirModalLimpar);
+
+  document.getElementById('btnConfirmarLimpeza')
+    ?.addEventListener('click', limparHistorico);
+});
