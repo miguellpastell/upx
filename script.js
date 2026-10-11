@@ -1196,25 +1196,217 @@ function gerarHTMLRelatorio() {
 }
 
 function baixarRelatorio() {
-  const html = gerarHTMLRelatorio();
+  const historico = recuperarHistorico();
 
-  if (!html) {
+  if (!historico.length) {
     alert('Não há registros no histórico para exportar. Faça uma análise primeiro.');
     return;
   }
 
-  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const agora = new Date();
-  const dataArquivo = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
 
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `ecobrasil-relatorio-${dataArquivo}.html`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  const ordenado = ordenarPorData(historico);
+  const { energia, agua } = separarPorTipo(ordenado);
+  const dataGeracao = formatarDataHoraRelatorio();
+
+  const azul = [22, 119, 232];
+  const verde = [24, 169, 87];
+  const cinza = [99, 113, 139];
+
+  // ===== CABEÇALHO =====
+  // Faixa gradiente (dois retângulos)
+  doc.setFillColor(...azul);
+  doc.rect(0, 0, 105, 30, 'F');
+  doc.setFillColor(...verde);
+  doc.rect(105, 0, 105, 30, 'F');
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(20);
+  doc.text('EcoBrasil — Relatório de Consumo', 14, 14);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.text('Histórico completo de consumo de água e energia elétrica', 14, 21);
+
+  // ===== METADADOS =====
+  doc.setTextColor(...cinza);
+  doc.setFontSize(9);
+  doc.text(`Gerado em: ${dataGeracao}`, 14, 38);
+  doc.text(
+    `Total: ${ordenado.length} registros (${energia.length} energia / ${agua.length} água)`,
+    14,
+    43
+  );
+
+  let y = 52;
+
+  // ===== RESUMO =====
+  function desenharCardResumo(x, titulo, registros, cor, unidade) {
+    const qtd = registros.length;
+    const total = registros.reduce((s, r) => s + (Number(r.consumoValor) || 0), 0);
+    const conta = registros.reduce((s, r) => s + (Number(r.valorConta) || 0), 0);
+    const media = qtd ? total / qtd : 0;
+
+    // Caixa
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(220, 232, 243);
+    doc.roundedRect(x, y, 88, 42, 3, 3, 'FD');
+
+    // Borda colorida esquerda
+    doc.setFillColor(...cor);
+    doc.rect(x, y, 3, 42, 'F');
+
+    // Título
+    doc.setTextColor(...cor);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.text(titulo, x + 8, y + 9);
+
+    doc.setTextColor(99, 113, 139);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+
+    doc.text('Registros:', x + 8, y + 17);
+    doc.text('Consumo total:', x + 8, y + 23);
+    doc.text('Consumo médio:', x + 8, y + 29);
+    doc.text('Total em contas:', x + 8, y + 35);
+
+    doc.setTextColor(24, 49, 83);
+    doc.setFont('helvetica', 'bold');
+    doc.text(String(qtd), x + 62, y + 17, { align: 'right' });
+    doc.text(`${total.toFixed(1)} ${unidade}`, x + 62, y + 23, { align: 'right' });
+    doc.text(`${media.toFixed(1)} ${unidade}`, x + 62, y + 29, { align: 'right' });
+    doc.text(formatarMoeda(conta), x + 62, y + 35, { align: 'right' });
+  }
+
+  desenharCardResumo(14, 'Energia elétrica', energia, verde, 'kWh');
+  desenharCardResumo(108, 'Água', agua, azul, 'm³');
+
+  y += 55;
+
+  // ===== TABELAS =====
+  function montarBody(registros, unidade) {
+    return registros.map(r => {
+      const comp = calcularStatusRelatorio(r);
+      const sinal = comp.percentual > 0 ? '+' : '';
+      const textoComp = comp.status === 'sem-dados'
+        ? '—'
+        : `${sinal}${comp.percentual.toFixed(1)}%`;
+
+      return [
+        formatarMes(r.mesReferencia),
+        r.nomeUsuario || '—',
+        String(r.quantidadePessoas || 1),
+        `${Number(r.consumoValor).toFixed(1)} ${unidade}`,
+        `${(Number(r.consumoValor) / Math.max(Number(r.quantidadePessoas) || 1, 1)).toFixed(1)} ${unidade}`,
+        formatarMoeda(Number(r.valorConta) || 0),
+        textoComp
+      ];
+    });
+  }
+
+  function desenharSecao(titulo, cor, registros, unidade) {
+    // Verifica se precisa nova página
+    if (y > 240) {
+      doc.addPage();
+      y = 20;
+    }
+
+    doc.setTextColor(...cor);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.text(titulo, 14, y);
+    y += 6;
+
+    if (!registros.length) {
+      doc.setTextColor(...cinza);
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(10);
+      doc.text(`Nenhum registro de ${unidade === 'm³' ? 'água' : 'energia'} encontrado.`, 14, y + 4);
+      y += 14;
+      return;
+    }
+
+    doc.autoTable({
+      startY: y,
+      head: [['Mês', 'Responsável', 'Pessoas', 'Consumo', 'Por pessoa', 'Conta', 'vs Média']],
+      body: montarBody(registros, unidade),
+      theme: 'grid',
+      styles: {
+        font: 'helvetica',
+        fontSize: 9,
+        cellPadding: 2.5,
+        textColor: [24, 49, 83],
+        lineColor: [220, 232, 243],
+        lineWidth: 0.2
+      },
+      headStyles: {
+        fillColor: cor,
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 9
+      },
+      alternateRowStyles: {
+        fillColor: [250, 252, 254]
+      },
+      columnStyles: {
+        2: { halign: 'center', cellWidth: 18 },
+        3: { halign: 'right', cellWidth: 26 },
+        4: { halign: 'right', cellWidth: 28 },
+        5: { halign: 'right', cellWidth: 26 },
+        6: { halign: 'right', cellWidth: 22, fontStyle: 'bold' }
+      },
+      didParseCell: (data) => {
+        // Colore os badges da coluna "vs Média"
+        if (data.section === 'body' && data.column.index === 6) {
+          const texto = data.cell.raw;
+          if (typeof texto === 'string') {
+            if (texto.startsWith('-')) {
+              data.cell.styles.textColor = [24, 169, 87];
+            } else if (texto === '—') {
+              data.cell.styles.textColor = [136, 148, 168];
+            } else if (texto.startsWith('+')) {
+              const valor = parseFloat(texto.replace('%', '').replace('+', ''));
+              data.cell.styles.textColor = valor <= 10
+                ? [22, 119, 232]
+                : [217, 74, 43];
+            }
+          }
+        }
+      }
+    });
+
+    y = doc.lastAutoTable.finalY + 12;
+  }
+
+  desenharSecao('⚡ Energia elétrica'.replace('⚡ ', ''), verde, energia, 'kWh');
+  desenharSecao('💧 Água'.replace('💧 ', ''), azul, agua, 'm³');
+
+  // ===== RODAPÉ =====
+  const totalPaginas = doc.internal.getNumberOfPages();
+
+  for (let i = 1; i <= totalPaginas; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8);
+    doc.setTextColor(...cinza);
+    doc.text(
+      `EcoBrasil — Monitoramento consciente de água e energia`,
+      14,
+      287
+    );
+    doc.text(`Página ${i} de ${totalPaginas}`, 196, 287, { align: 'right' });
+  }
+
+  // ===== NOME DO ARQUIVO =====
+  const agora = new Date();
+  const dia = String(agora.getDate()).padStart(2, '0');
+  const mes = String(agora.getMonth() + 1).padStart(2, '0');
+  const ano = agora.getFullYear();
+  const nomeArquivo = `EcoBrasil-Relatorio-${dia}-${mes}-${ano}.pdf`;
+
+  doc.save(nomeArquivo);
 }
 
 document.getElementById('btnBaixarRelatorio')?.addEventListener('click', baixarRelatorio);
